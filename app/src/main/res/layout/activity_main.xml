@@ -10,7 +10,7 @@
         android:id="@+id/playButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Play Game"
+        android:text="Start Game"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         tools:layout_editor_absoluteX="160dp"

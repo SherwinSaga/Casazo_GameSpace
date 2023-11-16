@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.casazo_gamespace.swipegame.SwipeGameView;
+
 public class MainActivity extends AppCompatActivity {
 
     Button play;
@@ -17,11 +19,19 @@ public class MainActivity extends AppCompatActivity {
 
         play = findViewById(R.id.playButton);
 
+        SwipeGameView swipeGameView = new SwipeGameView(this, null);
+
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setContentView(R.layout.swipegame_layout);
+                setContentView(swipeGameView);
+                //TO DO
+                //timer
+                //maybe ontouch animation
+                //save the score??
             }
         });
+
+
     }
 }
