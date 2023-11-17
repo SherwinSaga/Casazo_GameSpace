@@ -7,15 +7,17 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class SwipeGameModel {
+public class SwipeGameModel extends Game{
     private List<Integer> vectorAssetIds;
     private List<String> directions;
-    private int score;
+
     private int currentAsset;
 
+
     public SwipeGameModel() {
+
+        super(0,0);
         directions = new ArrayList<>();
-        score = 0;
         vectorAssetIds = Arrays.asList(
                 R.drawable.swipegame_1up,
                 R.drawable.swipegame_2down,
@@ -26,41 +28,37 @@ public class SwipeGameModel {
         currentAsset = new Random().nextInt(vectorAssetIds.size());
     }
 
-    public void generateRandomDirection() {
-        String[] allDirections = {"UP", "DOWN", "LEFT", "RIGHT"};
-        Random random = new Random();
-        String randomDirection = allDirections[random.nextInt(allDirections.length)];
-        directions.add(randomDirection);
-
-    }
-
-    public int getRandomVectorAssetId() {
-
-        int randomIndex;
-        while(true){
-            randomIndex = new Random().nextInt(vectorAssetIds.size());
-            if(randomIndex != currentAsset){ //to prevent same asset twice a row
-                break;
-            }
-        }
-        currentAsset = randomIndex;
-        return vectorAssetIds.get(randomIndex);
-    }
 
     public List<String> getDirections() {
         return directions;
     }
 
-    public int getScore() {
-        return score;
+    public void addDirection(String s){
+        directions.add(s);
+    }
+    public int getCurrentAsset(){
+        return currentAsset;
     }
 
-    public void incrementScore() {
-        score++;
+    public void setCurrentAsset(int s){
+        this.currentAsset = s;
     }
 
-    public void resetGame() {
+    public int getVectorAssetIdsSize(){
+        return vectorAssetIds.size();
+    }
+
+    public List<Integer> getVectorAssetIds(){
+        return vectorAssetIds;
+    }
+
+    public int getAssetID(int i){
+        return vectorAssetIds.get(i);
+    }
+
+    public void clear(){
         directions.clear();
-        score = 0;
     }
+
+
 }

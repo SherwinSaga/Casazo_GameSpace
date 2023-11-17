@@ -1,50 +1,96 @@
 package com.example.casazo_gamespace.swipegame;
 
 import android.graphics.Color;
-import android.widget.Toast;
 
 import java.util.List;
+import java.util.Random;
 
 
 public class SwipeGameController {
     private SwipeGameModel model;
     private SwipeGameView view;
+    private int Backgroundtracker;
+    private String occurenceTracker1;
+    private boolean isChange2nd;
 
-    private int tracker;
 
 
     public SwipeGameController(SwipeGameModel model, SwipeGameView view) {
         this.model = model;
         this.view = view;
-        this.tracker = 0;
+        this.Backgroundtracker = 0;
+        this.occurenceTracker1 = "";
+        this.isChange2nd = false;
     }
 
     public void onSwipe(String direction) {
         List<String> directions = model.getDirections();
 
         if (!directions.isEmpty() && direction.equals(directions.get(0))) {
-            model.incrementScore();
+            model.incrementCurrentScore();
             directions.remove(0);
             if (directions.isEmpty()) {
-                model.generateRandomDirection();
+                generateRandomDirection();
                 view.updateDirections(model.getDirections());
-                //Toast.makeText(view.getContext(), model.getRandomVectorAssetId(), Toast.LENGTH_SHORT).show();
-                view.displayRandomImage(model.getRandomVectorAssetId());
+                view.displayRandomImage(generateRandomVectorAssetId());
                 updateBackgroundColor();
-                tracker++;
+                Backgroundtracker++;
             }
-            view.updateScore(model.getScore());
+            view.updateScore(model.getCurrentScore());
         } else {
-            view.showGameOver(model.getScore());
-            model.resetGame();
+            view.showGameOver(model.getCurrentScore());
+            if(model.getCurrentScore() > model.getHighScore()){    //track highscore
+                model.setHighScore(model.getCurrentScore());
+            }
+            resetGame();
             view.updateDirections(model.getDirections());
-            view.updateScore(model.getScore());
+            view.updateScore(model.getCurrentScore());
         }
+    }
+
+
+    public void generateRandomDirection() {
+        String[] allDirections = {"UP", "DOWN", "LEFT", "RIGHT"};
+        String randomDirection;
+        Random random = new Random();
+
+        while (true) {
+            randomDirection = allDirections[random.nextInt(allDirections.length)];
+            if (!randomDirection.equals(occurenceTracker1) || (randomDirection.equals(occurenceTracker1) && !isChange2nd)) {
+                break;
+            }
+        }
+        if (randomDirection.equals(occurenceTracker1)) {
+            isChange2nd = true;
+        } else {
+            occurenceTracker1 = randomDirection;
+            isChange2nd = false;
+        }
+
+        model.addDirection(randomDirection);
+    }
+
+    public int generateRandomVectorAssetId() {
+
+        int randomIndex;
+        while(true){
+            randomIndex = new Random().nextInt(model.getVectorAssetIdsSize());
+            if(randomIndex != model.getCurrentAsset()){ //to prevent same asset twice a row
+                break;
+            }
+        }
+        model.setCurrentAsset(randomIndex);
+        return model.getAssetID(randomIndex);
+    }
+
+    public void resetGame() {
+        model.clear();
+        model.setCurrentScore(0);
     }
 
     protected void updateBackgroundColor(){
 
-        switch (tracker){
+        switch (Backgroundtracker){
             case 0:
                 view.setBackgroundColor(Color.argb(255, 255 ,255, 0 )); //yellow
                 break;
@@ -92,7 +138,7 @@ public class SwipeGameController {
                 break;
             case 15:
                 view.setBackgroundColor(Color.argb(255, 252, 174, 30));
-                tracker = 0;
+                Backgroundtracker = 0;
                 break;
         }
 

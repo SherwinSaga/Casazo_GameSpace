@@ -4,9 +4,9 @@ public class Game {
     private int HighScore;
     private int CurrentScore;
 
-    public Game(){
-        HighScore = 0;
-        CurrentScore = 0;
+    public Game(int n, int j){
+        HighScore = n;
+        CurrentScore = j;
     }
 
     public int getHighScore() {
@@ -19,5 +19,13 @@ public class Game {
 
     public void incrementCurrentScore(){
         CurrentScore++;
+    }
+
+    public void setHighScore(int n){
+        this.HighScore = n;
+    }
+
+    public void setCurrentScore(int n){
+        this.CurrentScore = n;
     }
 }

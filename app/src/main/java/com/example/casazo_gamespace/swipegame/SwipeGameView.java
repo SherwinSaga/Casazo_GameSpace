@@ -15,7 +15,7 @@ import com.example.casazo_gamespace.R;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.List;
-import java.util.Random;
+
 
 public class SwipeGameView extends ConstraintLayout {
 
@@ -81,9 +81,9 @@ public class SwipeGameView extends ConstraintLayout {
             }
         });
 
-        model.generateRandomDirection();
+        controller.generateRandomDirection();
         updateDirections(model.getDirections());
-        updateScore(model.getScore());
+        updateScore(model.getCurrentScore());
     }
 
     public void updateDirections(List<String> directions) {
@@ -109,9 +109,9 @@ public class SwipeGameView extends ConstraintLayout {
                 .setPositiveButton("Restart", (dialog, which) -> {
                     SwipeGameModel model = new SwipeGameModel();
                     controller = new SwipeGameController(model, this);
-                    model.generateRandomDirection();
+                    controller.generateRandomDirection();
                     updateDirections(model.getDirections());
-                    updateScore(model.getScore());
+                    updateScore(model.getCurrentScore());
                 })
                 .setNegativeButton("Exit", (dialog, which) -> {
                     Intent intent = new Intent(getContext(), MainActivity.class);
