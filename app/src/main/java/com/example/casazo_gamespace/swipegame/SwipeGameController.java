@@ -31,7 +31,7 @@ public class SwipeGameController {
             directions.remove(0);
             if (directions.isEmpty()) {
                 generateRandomDirection();
-                view.updateDirections(model.getDirections());
+                view.textviewDirections(model.getDirections());
                 view.displayRandomImage(generateRandomVectorAssetId());
                 updateBackgroundColor();
                 Backgroundtracker++;
@@ -43,7 +43,7 @@ public class SwipeGameController {
                 model.setHighScore(model.getCurrentScore());
             }
             resetGame();
-            view.updateDirections(model.getDirections());
+            view.textviewDirections(model.getDirections());
             view.updateScore(model.getCurrentScore());
         }
     }
@@ -52,9 +52,9 @@ public class SwipeGameController {
     public void generateRandomDirection() {
         String[] allDirections = {"UP", "DOWN", "LEFT", "RIGHT"};
         String randomDirection;
-        Random random = new Random();
-
+        
         while (true) {
+            Random random = new Random();
             randomDirection = allDirections[random.nextInt(allDirections.length)];
             if (!randomDirection.equals(occurenceTracker1) || (randomDirection.equals(occurenceTracker1) && !isChange2nd)) {
                 break;
@@ -87,6 +87,8 @@ public class SwipeGameController {
         model.clear();
         model.setCurrentScore(0);
     }
+
+
 
     protected void updateBackgroundColor(){
 

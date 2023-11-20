@@ -82,11 +82,11 @@ public class SwipeGameView extends ConstraintLayout {
         });
 
         controller.generateRandomDirection();
-        updateDirections(model.getDirections());
+        textviewDirections(model.getDirections());
         updateScore(model.getCurrentScore());
     }
 
-    public void updateDirections(List<String> directions) {
+    public void textviewDirections(List<String> directions) {
         StringBuilder directionText = new StringBuilder();
         for (String dir : directions) {
             directionText.append(dir).append(", ");
@@ -110,7 +110,7 @@ public class SwipeGameView extends ConstraintLayout {
                     SwipeGameModel model = new SwipeGameModel();
                     controller = new SwipeGameController(model, this);
                     controller.generateRandomDirection();
-                    updateDirections(model.getDirections());
+                    textviewDirections(model.getDirections());
                     updateScore(model.getCurrentScore());
                 })
                 .setNegativeButton("Exit", (dialog, which) -> {
@@ -120,6 +120,7 @@ public class SwipeGameView extends ConstraintLayout {
                 })
                 .show();
     }
+
 
 
 }
