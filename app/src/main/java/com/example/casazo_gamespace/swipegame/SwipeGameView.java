@@ -43,11 +43,11 @@ public class SwipeGameView extends ConstraintLayout {
 
         controller.generateRandomDirection();
         setBackgroundColor(Color.argb(255, 252, 174, 30));
-        textviewDirections(model.getDirections());
-        updateScore(model.getCurrentScore());
+        setTextviewDirections(model.getDirections());
+        setScore(model.getCurrentScore());
     }
 
-    public void textviewDirections(List<String> directions) {
+    public void setTextviewDirections(List<String> directions) {
         StringBuilder directionText = new StringBuilder();
         for (String dir : directions) {
             directionText.append(dir).append(", ");
@@ -55,12 +55,12 @@ public class SwipeGameView extends ConstraintLayout {
         directionTextView.setText(directionText.toString().replaceAll(", $", ""));
     }
 
-    public void displayRandomImage(int vectorResourceId) {
-        vectorAssetImageView.setImageResource(vectorResourceId);
+    public void setScore(int score) {
+        scoreTextView.setText("Score: " + score);
     }
 
-    public void updateScore(int score) {
-        scoreTextView.setText("Score: " + score);
+    public void setDisplayRandomImage(int vectorResourceId) {
+        vectorAssetImageView.setImageResource(vectorResourceId);
     }
 
 
@@ -73,8 +73,8 @@ public class SwipeGameView extends ConstraintLayout {
                     controller = new SwipeGameController(model, this);
                     controller.generateRandomDirection();
                     setOnTouchListener(controller.getOnTouchListener());
-                    textviewDirections(model.getDirections());
-                    updateScore(model.getCurrentScore());
+                    setTextviewDirections(model.getDirections());
+                    setScore(model.getCurrentScore());
                 })
                 .setNegativeButton("Exit", (dialog, which) -> {
                     Intent intent = new Intent(getContext(), MainActivity.class);

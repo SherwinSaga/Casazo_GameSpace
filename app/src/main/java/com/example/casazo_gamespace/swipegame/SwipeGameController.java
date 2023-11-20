@@ -30,7 +30,7 @@ public class SwipeGameController {
             if (directions.isEmpty()) {
                 sgUpdater.updateGame(model);
             }
-            view.updateScore(model.getCurrentScore());
+            view.setScore(model.getCurrentScore());
         } else {
             if(model.getCurrentScore() > model.getHighScore()){    //track highscore
                 model.setHighScore(model.getCurrentScore());

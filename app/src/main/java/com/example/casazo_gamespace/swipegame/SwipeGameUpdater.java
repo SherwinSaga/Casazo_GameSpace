@@ -18,8 +18,8 @@ public class SwipeGameUpdater {
 
     public void updateGame(SwipeGameModel model){
         generateRandomDirection(model);
-        view.textviewDirections(model.getDirections());
-        view.displayRandomImage(generateRandomVectorAssetId(model));
+        view.setTextviewDirections(model.getDirections());
+        view.setDisplayRandomImage(generateRandomVectorAssetId(model));
         updateBackgroundColor();
     }
 
