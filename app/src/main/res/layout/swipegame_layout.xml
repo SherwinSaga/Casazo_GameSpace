@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    >
 
     <Space
         android:layout_width="match_parent"
@@ -22,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Swipe Direction"
-        android:textSize="18sp"
+        android:textSize="14sp"
         android:textColor="@color/black"
         android:layout_marginTop="-18dp"/>
 
