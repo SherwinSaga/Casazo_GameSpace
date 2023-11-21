@@ -1,8 +1,10 @@
 package com.example.casazo_gamespace.swipegame;
 
 import android.graphics.Color;
+import android.os.CountDownTimer;
 import android.view.MotionEvent;
 import android.view.View;
+
 
 import java.util.List;
 import java.util.Random;
@@ -13,12 +15,25 @@ public class SwipeGameController {
     private SwipeGameView view;
     private SwipeGameUpdater sgUpdater;
     private float x1, y1, x2, y2;
+    private CountDownTimer timer;
 
 
     public SwipeGameController(SwipeGameModel model, SwipeGameView view) {
         this.model = model;
         this.view = view;
         this.sgUpdater = new SwipeGameUpdater(view);
+
+        this.timer = new CountDownTimer(1000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                // This method will be called every second
+            }
+
+            public void onFinish() {
+                view.GameOverUI(model.getCurrentScore());
+                resetGame();
+            }
+        };
+
     }
 
     public void onSwipe(String direction) {
@@ -29,13 +44,15 @@ public class SwipeGameController {
             directions.remove(0);
             if (directions.isEmpty()) {
                 sgUpdater.updateGame(model);
+                timer.cancel();
+                timer.start();
             }
             view.setScore(model.getCurrentScore());
         } else {
             if(model.getCurrentScore() > model.getHighScore()){    //track highscore
                 model.setHighScore(model.getCurrentScore());
             }
-            view.showGameOverUI(model.getCurrentScore());
+            view.GameOverUI(model.getCurrentScore());
             resetGame();
         }
     }
@@ -85,10 +102,11 @@ public class SwipeGameController {
         };
     }
 
-    public void resetGame() {
+    private void resetGame() {
         model.clear();
         model.setCurrentScore(0);
         sgUpdater.resetUpdater();
+        timer.cancel();
     }
 
 

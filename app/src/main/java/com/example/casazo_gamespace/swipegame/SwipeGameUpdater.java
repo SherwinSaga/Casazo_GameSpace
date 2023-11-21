@@ -2,6 +2,7 @@ package com.example.casazo_gamespace.swipegame;
 
 import android.graphics.Color;
 
+
 import java.util.Random;
 
 public class SwipeGameUpdater {
@@ -40,7 +41,6 @@ public class SwipeGameUpdater {
             occurenceTracker1 = randomDirection;
             isChange2nd = false;
         }
-
         model.addDirection(randomDirection);
     }
 

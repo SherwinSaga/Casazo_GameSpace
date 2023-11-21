@@ -63,8 +63,7 @@ public class SwipeGameView extends ConstraintLayout {
         vectorAssetImageView.setImageResource(vectorResourceId);
     }
 
-
-    public void showGameOverUI(int score) {
+    public void GameOverUI(int score) {
         new AlertDialog.Builder(getContext())
                 .setTitle("Game Over")
                 .setMessage("Your score is: " + score)
