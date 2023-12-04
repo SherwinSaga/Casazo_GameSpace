@@ -100,23 +100,17 @@ public class ColorMatchGameController implements View.OnClickListener {
                 if (colorMatchGameModel.getCurrentTime() > 0) {
                     handler.postDelayed(runnable, 100);
                 } else {
-                    // Check if the colors of the arrow and the button are the same
                     if (buttonState == colorMatchGameModel.getArrowState()) {
-                        // Increase points and show them
                         colorMatchGameModel.setCurrentPoints(colorMatchGameModel.getCurrentPoints() + 1);
                         colorMatchGameView.displayPoints(colorMatchGameModel.getCurrentPoints());
-
-                        // Make the speed higher after every turn/if the speed is 1 second make it again 2 seconds
                         if (colorMatchGameModel.getCurrentPoints() % 5 == 0) {
-                            // Increase the speed after every 5 points
-                            colorMatchGameModel.setStartTime(colorMatchGameModel.getStartTime() - 2000); // or any value you desire
+                            colorMatchGameModel.setStartTime(colorMatchGameModel.getStartTime() - 2000);
                             if (colorMatchGameModel.getStartTime() < 1000) {
                                 colorMatchGameModel.setStartTime(2000);
                             }
                             colorMatchGameView.displayProgressBar(colorMatchGameModel.getStartTime(), colorMatchGameModel.getStartTime());
                         }
 
-                        // Generate a new color for the arrow
                         colorMatchGameModel.setArrowState(new Random().nextInt(4) + 1);
                         colorMatchGameView.setArrowImage(colorMatchGameModel.getArrowState());
 
@@ -126,7 +120,7 @@ public class ColorMatchGameController implements View.OnClickListener {
                         handler.postDelayed(runnable, 100);
                     } else {
                         colorMatchGameView.getIvButton().setEnabled(false);
-                        //Toast.makeText(colorMatchGameView.getContext(), "GAME OVER!", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(colorMatchGameView.getContext(), "GAME OVER!", Toast.LENGTH_SHORT).show(); oten ka dika mogana
                         btnRetry.setVisibility(View.VISIBLE);
                     }
                 }
