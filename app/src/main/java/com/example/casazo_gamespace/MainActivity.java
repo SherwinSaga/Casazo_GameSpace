@@ -21,12 +21,14 @@ public class MainActivity extends AppCompatActivity {
 
         SwipeGameView swipeGameView = new SwipeGameView(this, null);
 
+        
+
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                
                 setContentView(swipeGameView);
                 //TO DO
-                //timer
                 //maybe ontouch animation
                 //save the score??
             }

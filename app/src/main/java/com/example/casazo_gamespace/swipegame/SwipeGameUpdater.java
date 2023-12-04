@@ -24,6 +24,7 @@ public class SwipeGameUpdater {
         updateBackgroundColor();
     }
 
+
     public void generateRandomDirection(SwipeGameModel model) {
         String[] allDirections = {"UP", "DOWN", "LEFT", "RIGHT"};
         String randomDirection;

@@ -83,5 +83,23 @@ public class SwipeGameView extends ConstraintLayout {
                 .show();
     }
 
-
+    public void doneUI(int score) {
+        new AlertDialog.Builder(getContext())
+                .setTitle("COMPLETED")
+                .setMessage("Your score is: " + score)
+                .setPositiveButton("Restart", (dialog, which) -> {
+                    SwipeGameModel model = new SwipeGameModel();
+                    controller = new SwipeGameController(model, this);
+                    controller.generateRandomDirection();
+                    setOnTouchListener(controller.getOnTouchListener());
+                    setTextviewDirections(model.getDirections());
+                    setScore(model.getCurrentScore());
+                })
+                .setNegativeButton("Exit", (dialog, which) -> {
+                    Intent intent = new Intent(getContext(), MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    getContext().startActivity(intent);
+                })
+                .show();
+    }
 }
