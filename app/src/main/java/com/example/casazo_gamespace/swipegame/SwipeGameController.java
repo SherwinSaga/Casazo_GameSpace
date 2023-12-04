@@ -1,10 +1,16 @@
 package com.example.casazo_gamespace.swipegame;
 
+import static java.security.AccessController.getContext;
+
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.view.MotionEvent;
 import android.view.View;
 
+
+import com.example.casazo_gamespace.MainActivity;
 
 import java.util.List;
 import java.util.Random;
@@ -17,6 +23,7 @@ public class SwipeGameController {
     private float x1, y1, x2, y2;
     private CountDownTimer timer;
 
+    private int goal;
 
     public SwipeGameController(SwipeGameModel model, SwipeGameView view) {
         this.model = model;
@@ -27,13 +34,14 @@ public class SwipeGameController {
             public void onTick(long millisUntilFinished) {
                 // This method will be called every second
             }
-
             public void onFinish() {
                 view.GameOverUI(model.getCurrentScore());
                 resetGame();
             }
         };
 
+        Random random = new Random();
+        this.goal = random.nextInt(6) + 10;
     }
 
     public void onSwipe(String direction) {
@@ -41,6 +49,7 @@ public class SwipeGameController {
 
         if (!directions.isEmpty() && direction.equals(directions.get(0))) {
             model.incrementCurrentScore();
+
             directions.remove(0);
             if (directions.isEmpty()) {
                 sgUpdater.updateGame(model);
@@ -48,6 +57,13 @@ public class SwipeGameController {
                 timer.start();
             }
             view.setScore(model.getCurrentScore());
+
+            if(model.getCurrentScore() == goal){
+
+                timer.cancel();
+                view.doneUI(model.getCurrentScore());
+                return;
+            }
         } else {
             if(model.getCurrentScore() > model.getHighScore()){    //track highscore
                 model.setHighScore(model.getCurrentScore());

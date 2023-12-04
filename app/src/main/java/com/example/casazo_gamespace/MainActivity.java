@@ -6,15 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.casazo_gamespace.colormatchgame.ColorMatchGameController;
-import com.example.casazo_gamespace.colormatchgame.ColorMatchGameModel;
-import com.example.casazo_gamespace.colormatchgame.ColorMatchGameView;
 import com.example.casazo_gamespace.swipegame.SwipeGameView;
 
 public class MainActivity extends AppCompatActivity {
-    private ColorMatchGameModel colorMatchGameModel;
-    private ColorMatchGameView colorMatchGameView;
-    private ColorMatchGameController colorMatchGameController;
+
     Button play;
 
     @Override
@@ -22,23 +17,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        colorMatchGameModel = new ColorMatchGameModel();
-        colorMatchGameView = new ColorMatchGameView(this);
-        colorMatchGameController = new ColorMatchGameController(colorMatchGameModel, colorMatchGameView);
-        /*play = findViewById(R.id.playButton);
+        play = findViewById(R.id.playButton);
 
         SwipeGameView swipeGameView = new SwipeGameView(this, null);
+
+        
 
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //setContentView(swipeGameView);
+                
+                setContentView(swipeGameView);
                 //TO DO
-                //timer
                 //maybe ontouch animation
                 //save the score??
             }
-        });*/
+        });
 
 
     }
