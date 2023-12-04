@@ -90,19 +90,20 @@ public class ColorMatchGameController implements View.OnClickListener {
         runnable = new Runnable() {
             @Override
             public void run() {
-                Button btnRetry = (Button) colorMatchGameView.getBtnRetry(); // Use colorMatchGameView to get the button
+                Button btnRetry = (Button) colorMatchGameView.getBtnRetry();
                 btnRetry.setVisibility(View.GONE);
                 colorMatchGameModel.setCurrentTime(colorMatchGameModel.getCurrentTime() - 100);
                 colorMatchGameView.displayProgressBar(colorMatchGameModel.getStartTime(), colorMatchGameModel.getCurrentTime());
                 //colorMatchGameUpdater.updateBackgroundColor();
 
-                // Check if there is still some time left in the progress bar
                 if (colorMatchGameModel.getCurrentTime() > 0) {
                     handler.postDelayed(runnable, 100);
                 } else {
                     if (buttonState == colorMatchGameModel.getArrowState()) {
+                        // Increase points and show them
                         colorMatchGameModel.setCurrentPoints(colorMatchGameModel.getCurrentPoints() + 1);
                         colorMatchGameView.displayPoints(colorMatchGameModel.getCurrentPoints());
+
                         if (colorMatchGameModel.getCurrentPoints() % 5 == 0) {
                             colorMatchGameModel.setStartTime(colorMatchGameModel.getStartTime() - 2000);
                             if (colorMatchGameModel.getStartTime() < 1000) {
@@ -120,7 +121,7 @@ public class ColorMatchGameController implements View.OnClickListener {
                         handler.postDelayed(runnable, 100);
                     } else {
                         colorMatchGameView.getIvButton().setEnabled(false);
-                        //Toast.makeText(colorMatchGameView.getContext(), "GAME OVER!", Toast.LENGTH_SHORT).show(); oten ka dika mogana
+                        //Toast.makeText(colorMatchGameView.getContext(), "GAME OVER!", Toast.LENGTH_SHORT).show(); oten ka dika mogana bot nmo
                         btnRetry.setVisibility(View.VISIBLE);
                     }
                 }
@@ -131,21 +132,16 @@ public class ColorMatchGameController implements View.OnClickListener {
 
 
     private void resetGame() {
-        // Reset all game variables to their initial values
         colorMatchGameModel.setCurrentTime(colorMatchGameModel.getOriginalStartTime());
         colorMatchGameModel.setCurrentPoints(0);
-        colorMatchGameModel.setButtonState(new Random().nextInt(4) + 1); // Set buttonState to a random value
-        colorMatchGameModel.setArrowState(new Random().nextInt(4) + 1); // Set arrowState to a random value
-
-        // Reset UI elements
+        colorMatchGameModel.setButtonState(new Random().nextInt(4) + 1);
+        colorMatchGameModel.setArrowState(new Random().nextInt(4) + 1);
         colorMatchGameView.displayProgressBar(colorMatchGameModel.getOriginalStartTime(), colorMatchGameModel.getOriginalStartTime());
         colorMatchGameView.displayPoints(colorMatchGameModel.getCurrentPoints());
         colorMatchGameView.setArrowImage(colorMatchGameModel.getArrowState());
         colorMatchGameView.setRotation(colorMatchGameModel.getButtonState(), getButtonDrawable(colorMatchGameModel.getButtonState()));
         colorMatchGameView.getIvButton().setEnabled(true);
         colorMatchGameView.displayRetryButton(true);
-
-        // Restart the game loop with the new time values
         handler.removeCallbacks(runnable);
         handler.postDelayed(runnable, 100);
     }
