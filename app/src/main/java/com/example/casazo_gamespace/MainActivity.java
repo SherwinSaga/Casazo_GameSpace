@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        play = findViewById(R.id.playButton);
+        //play = findViewById(R.id.playButton);
 
         SwipeGameView swipeGameView = new SwipeGameView(this, null);
 
