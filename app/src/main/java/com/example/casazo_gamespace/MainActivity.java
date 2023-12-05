@@ -1,39 +1,27 @@
 package com.example.casazo_gamespace;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 
-import com.example.casazo_gamespace.swipegame.SwipeGameView;
+import com.example.casazo_gamespace.colormatchgame.ColorMatchGameController;
+import com.example.casazo_gamespace.colormatchgame.ColorMatchGameModel;
+import com.example.casazo_gamespace.colormatchgame.ColorMatchGameView;
+
 
 public class MainActivity extends AppCompatActivity {
 
-    Button play;
+    private ColorMatchGameModel colorMatchGameModel;
+    private ColorMatchGameView colorMatchGameView;
+    private ColorMatchGameController colorMatchGameController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.colormatchgame_layout);
 
-        //play = findViewById(R.id.playButton);
-
-        SwipeGameView swipeGameView = new SwipeGameView(this, null);
-
-        
-
-        play.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                
-                setContentView(swipeGameView);
-                //TO DO
-                //maybe ontouch animation
-                //save the score??
-            }
-        });
-
-
+        // Instantiate Model, View, and Controller
+        colorMatchGameModel = new ColorMatchGameModel();
+        colorMatchGameView = new ColorMatchGameView(this);
+        colorMatchGameController = new ColorMatchGameController(colorMatchGameModel, colorMatchGameView);
     }
 }
