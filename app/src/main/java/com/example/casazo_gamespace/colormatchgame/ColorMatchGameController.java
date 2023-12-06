@@ -1,14 +1,13 @@
 package com.example.casazo_gamespace.colormatchgame;
 
-import android.os.Handler;
+import android.util.Log;
 import android.view.View;
+import android.os.Handler;
 import android.widget.Button;
-
+import android.widget.Toast;
 
 import com.example.casazo_gamespace.R;
-
 import java.util.Random;
-
 
 public class ColorMatchGameController implements View.OnClickListener {
     private ColorMatchGameModel colorMatchGameModel;
@@ -100,18 +99,22 @@ public class ColorMatchGameController implements View.OnClickListener {
                     handler.postDelayed(runnable, 100);
                 } else {
                     if (buttonState == colorMatchGameModel.getArrowState()) {
-                        // Increase points and show them
                         colorMatchGameModel.setCurrentPoints(colorMatchGameModel.getCurrentPoints() + 1);
                         colorMatchGameView.displayPoints(colorMatchGameModel.getCurrentPoints());
 
-                        if (colorMatchGameModel.getCurrentPoints() % 5 == 0) {
-                            colorMatchGameModel.setStartTime(colorMatchGameModel.getStartTime() - 2000);
-                            if (colorMatchGameModel.getStartTime() < 1000) {
-                                colorMatchGameModel.setStartTime(2000);
+                        if (colorMatchGameModel.getCurrentPoints() % 5 == 0 && colorMatchGameModel.getCurrentPoints() > 0) {
+                            colorMatchGameModel.setStartTime(colorMatchGameModel.getStartTime() - 500);
+                            if (colorMatchGameModel.getStartTime() < 1500) {
+                                colorMatchGameModel.setStartTime(1500);
                             }
                             colorMatchGameView.displayProgressBar(colorMatchGameModel.getStartTime(), colorMatchGameModel.getStartTime());
                         }
 
+                        if (colorMatchGameModel.getCurrentPoints() == 6) {
+                            colorMatchGameView.getIvButton().setEnabled(false);
+                            colorMatchGameView.displayRetryButton(true);
+                            return;
+                        }
                         colorMatchGameModel.setArrowState(new Random().nextInt(4) + 1);
                         colorMatchGameView.setArrowImage(colorMatchGameModel.getArrowState());
 
@@ -121,7 +124,6 @@ public class ColorMatchGameController implements View.OnClickListener {
                         handler.postDelayed(runnable, 100);
                     } else {
                         colorMatchGameView.getIvButton().setEnabled(false);
-                        //Toast.makeText(colorMatchGameView.getContext(), "GAME OVER!", Toast.LENGTH_SHORT).show(); oten ka dika mogana bot nmo
                         btnRetry.setVisibility(View.VISIBLE);
                     }
                 }
@@ -130,18 +132,20 @@ public class ColorMatchGameController implements View.OnClickListener {
         handler.postDelayed(runnable, 100);
     }
 
-
     private void resetGame() {
         colorMatchGameModel.setCurrentTime(colorMatchGameModel.getOriginalStartTime());
         colorMatchGameModel.setCurrentPoints(0);
         colorMatchGameModel.setButtonState(new Random().nextInt(4) + 1);
         colorMatchGameModel.setArrowState(new Random().nextInt(4) + 1);
+
         colorMatchGameView.displayProgressBar(colorMatchGameModel.getOriginalStartTime(), colorMatchGameModel.getOriginalStartTime());
         colorMatchGameView.displayPoints(colorMatchGameModel.getCurrentPoints());
         colorMatchGameView.setArrowImage(colorMatchGameModel.getArrowState());
         colorMatchGameView.setRotation(colorMatchGameModel.getButtonState(), getButtonDrawable(colorMatchGameModel.getButtonState()));
+
         colorMatchGameView.getIvButton().setEnabled(true);
         colorMatchGameView.displayRetryButton(true);
+
         handler.removeCallbacks(runnable);
         handler.postDelayed(runnable, 100);
     }
