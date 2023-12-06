@@ -33,6 +33,8 @@ public class SwipeGameController {
         this.timer = new CountDownTimer(1000, 1000) {
             public void onTick(long millisUntilFinished) {
                 // This method will be called every second
+                int prog = (int) (millisUntilFinished/1000);
+                sgUpdater.updateTimeBar(prog);
             }
             public void onFinish() {
                 view.GameOverUI(model.getCurrentScore());

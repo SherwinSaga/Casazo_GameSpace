@@ -24,6 +24,9 @@ public class SwipeGameUpdater {
         updateBackgroundColor();
     }
 
+    public void updateTimeBar(int p){
+        view.setTimeBar(p);
+    }
 
     public void generateRandomDirection(SwipeGameModel model) {
         String[] allDirections = {"UP", "DOWN", "LEFT", "RIGHT"};

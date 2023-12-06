@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".Widget.WidgetService" android:enabled="true"/>
+        <service android:name=".Widget.WidgetService" android:enabled="true"    />
     </application>
 
 </manifest>
