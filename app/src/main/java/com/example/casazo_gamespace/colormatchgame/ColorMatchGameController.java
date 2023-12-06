@@ -15,7 +15,7 @@ public class ColorMatchGameController implements View.OnClickListener {
     private ColorMatchGameUpdater colorMatchGameUpdater;
     Handler handler;
     Runnable runnable;
-    Random r;
+    int Randomlimit;
 
     private final static int STATIC_BLUE = 1;
     private final static int STATIC_RED = 2;
@@ -32,6 +32,8 @@ public class ColorMatchGameController implements View.OnClickListener {
         initListeners();
         updateView();
         startGameLoop();
+        Random r = new Random();
+        Randomlimit = r.nextInt(7)+10;
     }
 
     public void initListeners(){
@@ -110,7 +112,7 @@ public class ColorMatchGameController implements View.OnClickListener {
                             colorMatchGameView.displayProgressBar(colorMatchGameModel.getStartTime(), colorMatchGameModel.getStartTime());
                         }
 
-                        if (colorMatchGameModel.getCurrentPoints() == 6) {
+                        if (colorMatchGameModel.getCurrentPoints() == Randomlimit) {
                             colorMatchGameView.getIvButton().setEnabled(false);
                             colorMatchGameView.displayRetryButton(true);
                             return;

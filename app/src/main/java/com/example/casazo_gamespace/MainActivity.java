@@ -26,7 +26,8 @@ public class MainActivity extends AppCompatActivity {
     private ColorMatchGameModel colorMatchGameModel;
     private ColorMatchGameView colorMatchGameView;
     private ColorMatchGameController colorMatchGameController;
-    Button play;
+    private SwipeGameView sw;
+
     private boolean isAppInForeground = false;
 
     @Override
@@ -34,22 +35,39 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        play = findViewById(R.id.playButton);
 
         WidgetState.checkPermission(this);
         WidgetState.hideWidget(this);
 
-        SwipeGameView sw = new SwipeGameView(this, null);
+        //saga game
+        sw = new SwipeGameView(this, null);
+        //setContentView(sw);
 
-        play.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setContentView(sw);
-            }
-        });
+        //castro game
+        setContentView(R.layout.colormatchgame_layout);
+        colorMatchGameModel = new ColorMatchGameModel();
+        colorMatchGameView = new ColorMatchGameView(MainActivity.this);
+        colorMatchGameController = new ColorMatchGameController(colorMatchGameModel, colorMatchGameView);
+
+
+
+        //to do (saga)
+        //on boot integrate with widget
+        //notifs during hours na common ang sleepiness
+
+        //assigned Jess
+        //to do
+        //random connect
+        //ang reset na button kay decide lang
+        //reset either start balik current game or simply leave it to random
+        //disregard score??? idk sir pwede rasad
+
+        //so if mag implement kag restart jess kay di malikayan na naay ma edit sa games namo kung ma gameover.
 
     }
 
+
+    //ayaw ni hilabti ty kay mabuang ang widget
     @Override
     protected void onStart() {
         super.onStart();
@@ -72,5 +90,11 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Permission denied by user.", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        moveTaskToBack(true);
     }
 }

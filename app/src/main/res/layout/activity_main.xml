@@ -6,15 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/playButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Start Game"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        tools:layout_editor_absoluteX="160dp"
-        tools:layout_editor_absoluteY="363dp"
-        />
+
 
 </RelativeLayout>

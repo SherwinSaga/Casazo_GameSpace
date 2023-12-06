@@ -10,6 +10,9 @@ import android.provider.Settings;
 
 public class WidgetState {
 
+    //to do fix
+    //ig press ug back sa menu kay duplicate widget
+    //ig play game nya ma gameover, restart or menu kay duplicate gihapon ang widget
     public static void startWidgetService(Activity activity, boolean isForeground) {
         if (!isForeground && !Settings.canDrawOverlays(activity)) {
             checkPermission(activity);
