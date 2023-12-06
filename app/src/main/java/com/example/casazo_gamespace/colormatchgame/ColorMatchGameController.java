@@ -105,9 +105,9 @@ public class ColorMatchGameController implements View.OnClickListener {
                         colorMatchGameView.displayPoints(colorMatchGameModel.getCurrentPoints());
 
                         if (colorMatchGameModel.getCurrentPoints() % 5 == 0 && colorMatchGameModel.getCurrentPoints() > 0) {
-                            colorMatchGameModel.setStartTime(colorMatchGameModel.getStartTime() - 500);
-                            if (colorMatchGameModel.getStartTime() < 1500) {
-                                colorMatchGameModel.setStartTime(1500);
+                            colorMatchGameModel.setStartTime(colorMatchGameModel.getStartTime() - 100);
+                            if (colorMatchGameModel.getStartTime() < 1000) {
+                                colorMatchGameModel.setStartTime(1000);
                             }
                             colorMatchGameView.displayProgressBar(colorMatchGameModel.getStartTime(), colorMatchGameModel.getStartTime());
                         }

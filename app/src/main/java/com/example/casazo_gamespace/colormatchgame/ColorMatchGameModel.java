@@ -13,10 +13,10 @@ public class ColorMatchGameModel {
     public ColorMatchGameModel() {
         this.buttonState = getRandomState();
         this.arrowState = getRandomState();
-        this.currentTime = 1500;
-        this.startTime = 1500;
+        this.currentTime = 1000;
+        this.startTime = 1000;
         this.currentPoints = 0;
-        this.originalStartTime = 1500;
+        this.originalStartTime = 1000;
     }
     //GETTERS
     public int getButtonState() {return buttonState;}
