@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.casazo_gamespace.Widget.WidgetService;
+import com.example.casazo_gamespace.Widget.WidgetState;
 import com.example.casazo_gamespace.colormatchgame.ColorMatchGameController;
 import com.example.casazo_gamespace.colormatchgame.ColorMatchGameModel;
 import com.example.casazo_gamespace.colormatchgame.ColorMatchGameView;
@@ -35,8 +36,8 @@ public class MainActivity extends AppCompatActivity {
 
         play = findViewById(R.id.playButton);
 
-        checkPermission();
-        hideWidget();
+        WidgetState.checkPermission(this);
+        WidgetState.hideWidget(this);
 
         SwipeGameView sw = new SwipeGameView(this, null);
 
@@ -53,37 +54,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         isAppInForeground = true;
-        hideWidget();
+        WidgetState.hideWidget(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         isAppInForeground = false;
-        startWidgetService();
-    }
-
-    private void startWidgetService() {
-        if (!isAppInForeground && !Settings.canDrawOverlays(MainActivity.this)) {
-            checkPermission();
-        } else if (!isAppInForeground) {
-            Intent intent = new Intent(MainActivity.this, WidgetService.class);
-            startService(intent);
-        }
-    }
-
-    private void hideWidget() {
-        // Check if the widget is running and hide it
-        if (Settings.canDrawOverlays(this)) {
-            Intent intent = new Intent(MainActivity.this, WidgetService.class);
-            stopService(intent);
-        }
-    }
-    public void checkPermission(){
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)){
-            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:"+getPackageName()));
-            startActivityForResult(intent, 1);
-        }
+        WidgetState.startWidgetService(this, isAppInForeground);
     }
 
     @Override
