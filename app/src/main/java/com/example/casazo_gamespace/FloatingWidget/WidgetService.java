@@ -1,6 +1,5 @@
-package com.example.casazo_gamespace.Widget;
+package com.example.casazo_gamespace.FloatingWidget;
 
-import java.security.Provider;
 import java.util.Calendar;
 
 import android.app.Service;
@@ -11,14 +10,10 @@ import android.os.IBinder;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
-import android.view.PixelCopy;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -139,11 +134,11 @@ public class WidgetService extends Service {
 
                         windowManager.updateViewLayout(mFloatingView, layoutParams);
 
-                        if(layoutParams.y >(height*0.6)){
-                            imageClose.setImageResource(R.drawable.widget_close);
+                        if(layoutParams.y >(height*0.7)){
+                            imageClose.setImageResource(R.drawable.widget_close_red);
                         }
                         else {
-                            imageClose.setImageResource(R.drawable.widget_close_red);
+                            imageClose.setImageResource(R.drawable.widget_close);
                         }
                         return true;
 

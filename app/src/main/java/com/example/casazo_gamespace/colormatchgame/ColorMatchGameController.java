@@ -41,6 +41,8 @@ public class ColorMatchGameController implements View.OnClickListener {
         colorMatchGameView.getBtnRetry().setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                Random r = new Random();
+                Randomlimit = r.nextInt(7)+10;
                 resetGame();
             }
         });
@@ -150,5 +152,6 @@ public class ColorMatchGameController implements View.OnClickListener {
 
         handler.removeCallbacks(runnable);
         handler.postDelayed(runnable, 100);
+
     }
 }

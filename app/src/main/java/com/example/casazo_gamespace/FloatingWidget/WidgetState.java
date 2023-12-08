@@ -1,4 +1,4 @@
-package com.example.casazo_gamespace.Widget;
+package com.example.casazo_gamespace.FloatingWidget;
 
 import android.app.Activity;
 import android.content.Context;

@@ -4,16 +4,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.casazo_gamespace.Widget.WidgetService;
-import com.example.casazo_gamespace.Widget.WidgetState;
+import com.example.casazo_gamespace.FloatingWidget.WidgetState;
 import com.example.casazo_gamespace.colormatchgame.ColorMatchGameController;
 import com.example.casazo_gamespace.colormatchgame.ColorMatchGameModel;
 import com.example.casazo_gamespace.colormatchgame.ColorMatchGameView;
