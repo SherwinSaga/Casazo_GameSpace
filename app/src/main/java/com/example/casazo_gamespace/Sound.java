@@ -31,14 +31,26 @@ public class Sound {
             case"fail":
                 audioRes = R.raw.fail;
                 break;
+            case "click":
+                audioRes = R.raw.click;
+                break;
+            case "rotate":
+                audioRes = R.raw.rotate;
+                break;
+            case "rotate2":
+                audioRes = R.raw.rotate2;
+                break;
         }
-        MediaPlayer p = MediaPlayer.create( context, audioRes);
-        p.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                mp.release();
-            }
-        });
-        p.start();
+        MediaPlayer mediaPlayer = MediaPlayer.create(context, audioRes);
+        if (mediaPlayer != null) {
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    mp.release();
+                }
+            });
+
+            mediaPlayer.start();
+        }
     }
 }

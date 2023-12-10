@@ -44,6 +44,7 @@ public class MemoryGameModel{
 
     public void clear() {
         userSequence.clear();
+        currentSequence.clear();
         round = 1;
     }
 }

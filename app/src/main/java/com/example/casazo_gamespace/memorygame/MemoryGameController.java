@@ -279,7 +279,7 @@ public class MemoryGameController extends AppCompatActivity {
                 }
                 evaluateRound(isCorrect);
             }
-        }, 300*mgmodel.getRound());
+        }, 400*mgmodel.getRound());
     }
 
     public void evaluateRound(Boolean userEval){

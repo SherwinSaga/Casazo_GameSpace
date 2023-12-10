@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import com.example.casazo_gamespace.MainActivity;
 import com.example.casazo_gamespace.R;
+import com.example.casazo_gamespace.Sound;
+
 import java.util.Random;
 
 public class ColorMatchGameController implements View.OnClickListener {
@@ -72,6 +74,8 @@ public class ColorMatchGameController implements View.OnClickListener {
         }
         colorMatchGameModel.setButtonState(newState);
         colorMatchGameView.setRotation(colorMatchGameModel.getButtonState(), getButtonDrawable(colorMatchGameModel.getButtonState()));
+        Sound.playSound(colorMatchGameView.getActivity(),"rotate");
+        //Sound.playSound(colorMatchGameView.getActivity(),"rotate2");
         colorMatchGameUpdater.updateBackgroundColor();
     }
 
@@ -137,6 +141,7 @@ public class ColorMatchGameController implements View.OnClickListener {
                             colorMatchGameView.notifyGameStatusChangedListener();
                             colorMatchGameView.getIvButton().setEnabled(false);
                             colorMatchGameView.displayRetryButton(true);
+                            Sound.playSound(colorMatchGameView.getActivity(),"start");
                             return;
                         }
 
@@ -158,6 +163,7 @@ public class ColorMatchGameController implements View.OnClickListener {
                         handler.postDelayed(runnable, 100);
                     } else {
                         colorMatchGameView.getIvButton().setEnabled(false);
+                        Sound.playSound(colorMatchGameView.getActivity(),"start");
                         btnRetry.setVisibility(View.VISIBLE);
                         btnExit.setVisibility(View.VISIBLE);
                     }
