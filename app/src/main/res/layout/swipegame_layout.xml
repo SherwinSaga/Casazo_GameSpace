@@ -7,9 +7,6 @@
     >
 
 
-
-
-
     <ImageView
         android:id="@+id/vectorAssetImageView"
         android:layout_width="80dp"
@@ -27,7 +24,8 @@
         android:text="Swipe Direction"
         android:textColor="@color/black"
         android:textSize="14sp"
-        android:layout_marginTop="35dp"/>
+        android:layout_marginTop="35dp"
+        />
 
     <Button
         android:id="@+id/restartbutton"
@@ -45,6 +43,13 @@
         android:textColor="@color/black"
         android:visibility="invisible"/>
 
+    <ProgressBar
+        android:id="@+id/progressBarSwipegame"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="80"
+        android:progressTint="@android:color/black"/>
 
 
 

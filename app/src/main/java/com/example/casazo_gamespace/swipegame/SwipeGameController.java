@@ -34,17 +34,16 @@ public class SwipeGameController {
         this.sgUpdater = new SwipeGameUpdater(view);
         this.isGameFinished = false;
 
-        this.timer = new CountDownTimer(1000, 1000) {
+        this.timer = new CountDownTimer(800, 20) {
             public void onTick(long millisUntilFinished) {
-                // This method will be called every second
-                int prog = (int) (millisUntilFinished/1000);
+                float progress = (float) millisUntilFinished / 1000; // Convert milliseconds to seconds
+                view.setProgressBar(progress);
             }
             public void onFinish() {
                 //When timer runs out, display restart
-                Sound.playSound(view.getContext(),"fail");
                 resetGame();
                 updateButtonRestart(true);
-
+                Sound.playSound(view.getContext(),"fail");
             }
         };
         initializeListeners();
