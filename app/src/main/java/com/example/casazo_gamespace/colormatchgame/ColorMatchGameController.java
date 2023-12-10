@@ -1,11 +1,15 @@
 package com.example.casazo_gamespace.colormatchgame;
 
+import static java.security.AccessController.getContext;
+
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.os.Handler;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.casazo_gamespace.MainActivity;
 import com.example.casazo_gamespace.R;
 import java.util.Random;
 
@@ -46,6 +50,14 @@ public class ColorMatchGameController implements View.OnClickListener {
                 Random r = new Random();
                 Randomlimit = r.nextInt(7)+10;
                 resetGame();
+            }
+        });
+        colorMatchGameView.getBtnExit().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(colorMatchGameView.getActivity(), MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                colorMatchGameView.getActivity().startActivity(intent);
             }
         });
     }
@@ -96,7 +108,9 @@ public class ColorMatchGameController implements View.OnClickListener {
             @Override
             public void run() {
                 Button btnRetry = (Button) colorMatchGameView.getBtnRetry();
+                Button btnExit = (Button) colorMatchGameView.getBtnExit();
                 btnRetry.setVisibility(View.GONE);
+                btnExit.setVisibility(View.GONE);
                 colorMatchGameModel.setCurrentTime(colorMatchGameModel.getCurrentTime() - 100);
                 colorMatchGameView.displayProgressBar(colorMatchGameModel.getStartTime(), colorMatchGameModel.getCurrentTime());
                 //colorMatchGameUpdater.updateBackgroundColor();
@@ -141,6 +155,7 @@ public class ColorMatchGameController implements View.OnClickListener {
                     } else {
                         colorMatchGameView.getIvButton().setEnabled(false);
                         btnRetry.setVisibility(View.VISIBLE);
+                        btnExit.setVisibility(View.VISIBLE);
                     }
                 }
             }

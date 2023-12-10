@@ -19,6 +19,8 @@ public class ColorMatchGameView {
     private TextView tv_points;
     private ProgressBar progressBar;
     private Button btnRetry;
+    private Button btnExit;
+    private Activity activity;
 
     private final static int STATIC_BLUE = 1;
     private final static int STATIC_RED = 2;
@@ -36,8 +38,11 @@ public class ColorMatchGameView {
         this.tv_points = activity.findViewById(R.id.tv_points);
         this.progressBar = activity.findViewById(R.id.progressBar);
         this.btnRetry = activity.findViewById(R.id.btnRetry);
+        this.btnExit = activity.findViewById(R.id.btnExit);
         this.rootView = activity.findViewById(android.R.id.content);
         this.btnRetry.setVisibility(View.GONE);
+        this.btnExit.setVisibility(View.GONE);
+        this.activity = activity;
     }
 
     public void setBackgroundColor(int color) {
@@ -89,6 +94,7 @@ public class ColorMatchGameView {
     public View getBtnRetry() {
         return btnRetry;
     }
+    public View getBtnExit() { return btnExit; }
 
     public void displayPoints(int currentPoints){
         tv_points.setText("POINTS: " + currentPoints);
@@ -101,7 +107,10 @@ public class ColorMatchGameView {
 
     public void displayRetryButton(boolean visible){
         btnRetry.setVisibility(visible ? View.VISIBLE : View.GONE);
+        btnExit.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
     public void setRotation(int buttonState, int buttonDrawable) {}
+
+    public Activity getActivity() { return activity;}
 }
