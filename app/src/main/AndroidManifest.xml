@@ -39,6 +39,11 @@
         <service
             android:name=".FloatingWidget.WidgetService"
             android:enabled="true" />
+
+        <activity
+            android:name=".memorygame.MemoryGameActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>
