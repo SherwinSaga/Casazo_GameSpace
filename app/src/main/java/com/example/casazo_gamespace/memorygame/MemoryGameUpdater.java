@@ -16,7 +16,7 @@ public class MemoryGameUpdater {
 
     public void updateBackgroundColor() {
         int color = Color.rgb(new Random().nextInt(256), new Random().nextInt(256), new Random().nextInt(256));
-        view.setBackgroundColor(color);
+
     }
 
 }
