@@ -113,6 +113,7 @@ public class ColorMatchGameController implements View.OnClickListener {
                 Button btnExit = (Button) colorMatchGameView.getBtnExit();
                 btnRetry.setVisibility(View.GONE);
                 btnExit.setVisibility(View.GONE);
+                btnExit.setVisibility(View.GONE);
                 colorMatchGameModel.setCurrentTime(colorMatchGameModel.getCurrentTime() - 100);
                 colorMatchGameView.displayProgressBar(colorMatchGameModel.getStartTime(), colorMatchGameModel.getCurrentTime());
                 //colorMatchGameUpdater.updateBackgroundColor();
@@ -158,7 +159,7 @@ public class ColorMatchGameController implements View.OnClickListener {
                         handler.postDelayed(runnable, 100);
                     } else {
                         colorMatchGameView.getIvButton().setEnabled(false);
-                        btnRetry.setVisibility(View.VISIBLE);
+                        //btnRetry.setVisibility(View.VISIBLE);
                         btnExit.setVisibility(View.VISIBLE);
                     }
                 }

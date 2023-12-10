@@ -16,7 +16,8 @@
         android:layout_marginTop="30dp"
         android:text="Score: 0"
         android:textSize="24sp"
-        android:textColor="@android:color/black"/>
+        android:textColor="@android:color/black"
+        android:visibility="invisible"/>
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -50,7 +51,7 @@
         android:id="@+id/btnExit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="EXIT"
+        android:text="\?"
         android:layout_below="@id/btnRetry"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"/>

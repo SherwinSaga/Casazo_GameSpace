@@ -110,7 +110,7 @@ public class ColorMatchGameView {
     }
 
     public void displayRetryButton(boolean visible){
-        btnRetry.setVisibility(visible ? View.VISIBLE : View.GONE);
+        //btnRetry.setVisibility(visible ? View.VISIBLE : View.GONE);
         btnExit.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 
