@@ -2,9 +2,18 @@ package com.example.casazo_gamespace;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.Settings;
 import android.widget.Toast;
 
@@ -16,6 +25,8 @@ import com.example.casazo_gamespace.memorygame.MemoryGameActivity;
 import com.example.casazo_gamespace.swipegame.SwipeGameView;
 
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean isAppInForeground = false;
 
+    private static final String CHANNEL_ID = "playReminderChannel";
+    private static final int NOTIFICATION_ID = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         WidgetState.checkPermission(this);
         WidgetState.hideWidget(this);
+        scheduleNotificationReminder();
 
         random = new Random();
         int randomGame = random.nextInt(3);
@@ -104,5 +119,57 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         moveTaskToBack(true);
+    }
+
+    //NOTIFICATION
+    private void scheduleNotificationReminder() {
+        final Handler handler = new Handler(Looper.getMainLooper());
+
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(() -> showNotificationReminder());
+            }
+        }, 0, 60 * 1000); //60secs para demo purposes
+    }
+
+    private void showNotificationReminder() {
+        if (!isAppInForeground) {
+            createNotificationChannel();
+
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                    .setSmallIcon(R.drawable.widget_icon)
+                    .setContentTitle("Play Reminder")
+                    .setContentText("Bored? Sleepy? Play Now")
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setAutoCancel(true);
+
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+            notificationManager.notify(NOTIFICATION_ID, builder.build());
+        }
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Play Reminder Channel";
+            String description = "Channel for play reminders";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 }

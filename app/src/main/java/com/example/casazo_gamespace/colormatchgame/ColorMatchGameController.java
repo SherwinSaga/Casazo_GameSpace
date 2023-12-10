@@ -17,6 +17,8 @@ public class ColorMatchGameController implements View.OnClickListener {
     Runnable runnable;
     int Randomlimit;
 
+    private int previousArrowState = -1;
+
     private final static int STATIC_BLUE = 1;
     private final static int STATIC_RED = 2;
     private final static int STATIC_YELLOW = 3;
@@ -108,8 +110,8 @@ public class ColorMatchGameController implements View.OnClickListener {
 
                         if (colorMatchGameModel.getCurrentPoints() % 5 == 0 && colorMatchGameModel.getCurrentPoints() > 0) {
                             colorMatchGameModel.setStartTime(colorMatchGameModel.getStartTime() - 100);
-                            if (colorMatchGameModel.getStartTime() < 1000) {
-                                colorMatchGameModel.setStartTime(1000);
+                            if (colorMatchGameModel.getStartTime() < 1300) {
+                                colorMatchGameModel.setStartTime(1300);
                             }
                             colorMatchGameView.displayProgressBar(colorMatchGameModel.getStartTime(), colorMatchGameModel.getStartTime());
                         }
@@ -119,8 +121,18 @@ public class ColorMatchGameController implements View.OnClickListener {
                             colorMatchGameView.displayRetryButton(true);
                             return;
                         }
-                        colorMatchGameModel.setArrowState(new Random().nextInt(4) + 1);
+
+                        int newArrowState;
+                        do {
+                            newArrowState = new Random().nextInt(4) + 1;
+                        } while (newArrowState == previousArrowState);
+
+                        previousArrowState = newArrowState;
+                        colorMatchGameModel.setArrowState(newArrowState);
                         colorMatchGameView.setArrowImage(colorMatchGameModel.getArrowState());
+
+                        //colorMatchGameModel.setArrowState(new Random().nextInt(4) + 1);
+                        //colorMatchGameView.setArrowImage(colorMatchGameModel.getArrowState());
 
                         colorMatchGameModel.setCurrentTime(colorMatchGameModel.getStartTime());
                         colorMatchGameView.displayProgressBar(colorMatchGameModel.getStartTime(), colorMatchGameModel.getStartTime());
