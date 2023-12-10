@@ -9,6 +9,7 @@ import androidx.core.app.NotificationManagerCompat;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -18,6 +19,7 @@ import android.os.Looper;
 import android.provider.Settings;
 import android.widget.Toast;
 
+import com.example.casazo_gamespace.FloatingWidget.WidgetService;
 import com.example.casazo_gamespace.FloatingWidget.WidgetState;
 import com.example.casazo_gamespace.colormatchgame.ColorMatchGameController;
 import com.example.casazo_gamespace.colormatchgame.ColorMatchGameModel;
@@ -49,7 +51,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         WidgetState.checkPermission(this);
-        WidgetState.hideWidget(this);
+        WidgetState.hideWidget(this, WidgetState.isMyServiceRunning(WidgetService.class, this));
+
         scheduleNotificationReminder();
 
         random = new Random();
@@ -95,8 +98,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         isAppInForeground = true;
-        WidgetState.hideWidget(this);
+        //WidgetState.hideWidget(this);
     }
+
 
     @Override
     protected void onStop() {
@@ -145,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                     .setSmallIcon(R.drawable.widget_icon)
                     .setContentTitle("Play Reminder")
-                    .setContentText("Bored? Sleepy? Play Now")
+                    .setContentText("Bored? Sleepy? Click to Play Now")
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setAutoCancel(true)
                     .setContentIntent(pendingIntent);
