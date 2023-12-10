@@ -2,6 +2,7 @@ package com.example.casazo_gamespace.memorygame;
 
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.media.MediaPlayer;
@@ -13,7 +14,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.casazo_gamespace.MainActivity;
 import com.example.casazo_gamespace.R;
+import com.example.casazo_gamespace.swipegame.SwipeGameController;
+import com.example.casazo_gamespace.swipegame.SwipeGameModel;
 
 import java.util.ArrayList;
 
@@ -330,7 +334,9 @@ public class MemoryGameActivity extends AppCompatActivity {
                 .setTitle("Game Over")
                 .setMessage("Your score is: " + score)
                 .setNegativeButton("Exit", (dialog, which) -> {
-                    finish();
+                    Intent intent = new Intent(MemoryGameActivity.this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
                 })
                 .show();
     }
