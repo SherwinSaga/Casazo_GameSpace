@@ -12,16 +12,18 @@ import com.example.casazo_gamespace.FloatingWidget.WidgetState;
 import com.example.casazo_gamespace.colormatchgame.ColorMatchGameController;
 import com.example.casazo_gamespace.colormatchgame.ColorMatchGameModel;
 import com.example.casazo_gamespace.colormatchgame.ColorMatchGameView;
+import com.example.casazo_gamespace.memorygame.MemoryGameActivity;
 import com.example.casazo_gamespace.swipegame.SwipeGameView;
 
+import java.util.Random;
+
 public class MainActivity extends AppCompatActivity {
-
-
 
     private ColorMatchGameModel colorMatchGameModel;
     private ColorMatchGameView colorMatchGameView;
     private ColorMatchGameController colorMatchGameController;
     private SwipeGameView sw;
+    private Random random;
 
     private boolean isAppInForeground = false;
 
@@ -34,17 +36,28 @@ public class MainActivity extends AppCompatActivity {
         WidgetState.checkPermission(this);
         WidgetState.hideWidget(this);
 
-        //saga game
-        sw = new SwipeGameView(this, null);
-        //setContentView(sw);
+        random = new Random();
+        int randomGame = random.nextInt(3);
 
-        //castro game
-        setContentView(R.layout.colormatchgame_layout);
-        colorMatchGameModel = new ColorMatchGameModel();
-        colorMatchGameView = new ColorMatchGameView(MainActivity.this);
-        colorMatchGameController = new ColorMatchGameController(colorMatchGameModel, colorMatchGameView);
-
-
+        switch (randomGame) {
+            case 0:
+                // Saga game (SwipeGameView)
+                SwipeGameView sw = new SwipeGameView(this, null);
+                setContentView(sw);
+                break;
+            case 1:
+                // Castro game (ColorMatchGame)
+                setContentView(R.layout.colormatchgame_layout);
+                colorMatchGameModel = new ColorMatchGameModel();
+                colorMatchGameView = new ColorMatchGameView(MainActivity.this);
+                colorMatchGameController = new ColorMatchGameController(colorMatchGameModel, colorMatchGameView);
+                break;
+            case 2:
+                // Zoilo game (MemoryGameActivity)
+                Intent intent = new Intent(MainActivity.this, MemoryGameActivity.class);
+                startActivity(intent);
+                break;
+        }
 
         //to do (saga)
         //on boot integrate with widget
