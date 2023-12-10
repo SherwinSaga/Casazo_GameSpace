@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 
 import com.example.casazo_gamespace.MainActivity;
+import com.example.casazo_gamespace.Sound;
 
 import java.util.List;
 import java.util.Random;
@@ -24,9 +25,7 @@ public class SwipeGameController {
     public SwipeGameUpdater sgUpdater;
     private float x1, y1, x2, y2;
     private CountDownTimer timer;
-
     private boolean isGameFinished;
-
     private int goal;
 
     public SwipeGameController(SwipeGameModel model, SwipeGameView view) {
@@ -42,6 +41,7 @@ public class SwipeGameController {
             }
             public void onFinish() {
                 //When timer runs out, display restart
+                Sound.playSound(view.getContext(),"fail");
                 resetGame();
                 updateButtonRestart(true);
 
@@ -67,6 +67,7 @@ public class SwipeGameController {
     public void onSwipe(String direction) {
         List<String> directions = model.getDirections();
 
+
         if (!directions.isEmpty() && direction.equals(directions.get(0))) {
             model.incrementCurrentScore();
 
@@ -76,6 +77,7 @@ public class SwipeGameController {
                 timer.cancel();
                 timer.start();
             }
+            Sound.playSound(view.getContext(),"swipe");
             view.setScore(model.getCurrentScore());
 
             //WIN CONDITION
@@ -93,6 +95,7 @@ public class SwipeGameController {
 
             //LOSE CONDITION
         } else {
+            Sound.playSound(view.getContext(),"fail");
             if(model.getCurrentScore() > model.getHighScore()){
                 model.setHighScore(model.getCurrentScore());
             }
@@ -160,10 +163,6 @@ public class SwipeGameController {
         view.setScore(model.getCurrentScore());
         view.hideBtnRestart();
         isGameFinished = false;
-    }
-
-    public boolean getIsGameFinished(){
-        return this.isGameFinished;
     }
 
     public void updateButtonRestart(boolean n){

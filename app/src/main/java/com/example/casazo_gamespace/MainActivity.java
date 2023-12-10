@@ -33,14 +33,7 @@ import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ColorMatchGameModel colorMatchGameModel;
-    private ColorMatchGameView colorMatchGameView;
-    private ColorMatchGameController colorMatchGameController;
-    private SwipeGameView sw;
-    private Random random;
-
     private boolean isAppInForeground = false;
-
     private static final String CHANNEL_ID = "playReminderChannel";
     private static final int NOTIFICATION_ID = 1;
     private GameManager gameManager;
@@ -56,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
         scheduleNotificationReminder();
 
         gameManager.startRandomGame();
-
     }
 
     @Override
