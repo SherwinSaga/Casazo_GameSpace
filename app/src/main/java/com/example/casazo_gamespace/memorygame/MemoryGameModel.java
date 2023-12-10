@@ -35,6 +35,7 @@ public class MemoryGameModel{
     public void addRandomSequence(){
         Random r = new Random();
         currentSequence.add(colors.get(r.nextInt(4)));
+        userSequence.clear();
         round = round + 1;
     }
     public void addUserSequence(String string){
@@ -42,7 +43,6 @@ public class MemoryGameModel{
     }
 
     public void clear() {
-        currentSequence.clear();
         userSequence.clear();
         round = 1;
     }

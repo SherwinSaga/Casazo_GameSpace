@@ -7,6 +7,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.casazo_gamespace.MainActivity;
 import com.example.casazo_gamespace.R;
+import com.example.casazo_gamespace.Sound;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -40,6 +42,7 @@ public class MemoryGameController extends AppCompatActivity {
         mgview.getButtonMemory().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mgmodel.clear();
                 updateView();
                 mgview.setButtonMemoryClicked(true);
                 startRound();
@@ -55,7 +58,7 @@ public class MemoryGameController extends AppCompatActivity {
                     @Override
                     public void run() {
                         handleGradientDrawable((TextView) mgview.getButtonBlue(), Color.parseColor("#26ABFF"),Color.BLUE);
-                        playSound("blue");
+                        Sound.playSound(mgview.getActivity(), "blue");
                     }
                 }, 0);
                 handler.postDelayed(new Runnable() {
@@ -63,7 +66,7 @@ public class MemoryGameController extends AppCompatActivity {
                     public void run() {
                         handleGradientDrawable((TextView) mgview.getButtonBlue(), Color.BLUE,Color.BLUE);
                     }
-                },400);
+                },300);
             }
         });
         mgview.getButtonGreen().setOnClickListener(new View.OnClickListener() {
@@ -76,7 +79,7 @@ public class MemoryGameController extends AppCompatActivity {
                     @Override
                     public void run() {
                         handleGradientDrawable((TextView) mgview.getButtonGreen(), Color.WHITE, Color.GREEN);
-                        playSound("green");
+                        Sound.playSound(mgview.getActivity(), "green");
                     }
                 }, 0);
                 handler.postDelayed(new Runnable() {
@@ -84,7 +87,7 @@ public class MemoryGameController extends AppCompatActivity {
                     public void run() {
                         handleGradientDrawable((TextView) mgview.getButtonGreen(), Color.GREEN, Color.GREEN);
                     }
-                }, 400);
+                }, 300);
             }
         });
         mgview.getButtonRed().setOnClickListener(new View.OnClickListener() {
@@ -97,7 +100,7 @@ public class MemoryGameController extends AppCompatActivity {
                     @Override
                     public void run() {
                         handleGradientDrawable((TextView) mgview.getButtonRed(), Color.parseColor("#ffcccb"),Color.RED);
-                        playSound("red");
+                        Sound.playSound(mgview.getActivity(), "red");
                     }
                 },0);
                 handler.postDelayed(new Runnable() {
@@ -105,7 +108,7 @@ public class MemoryGameController extends AppCompatActivity {
                     public void run() {
                         handleGradientDrawable((TextView) mgview.getButtonRed(), Color.RED,Color.RED);
                     }
-                }, 400);
+                }, 300);
             }
         });
         mgview.getButtonYellow().setOnClickListener(new View.OnClickListener() {
@@ -118,7 +121,7 @@ public class MemoryGameController extends AppCompatActivity {
                     @Override
                     public void run() {
                         handleGradientDrawable((TextView) mgview.getButtonYellow(), Color.WHITE, Color.YELLOW);
-                        playSound("yellow");
+                        Sound.playSound(mgview.getActivity(), "yellow");
                     }
                 }, 0);
                 handler.postDelayed(new Runnable() {
@@ -126,7 +129,7 @@ public class MemoryGameController extends AppCompatActivity {
                     public void run() {
                         handleGradientDrawable((TextView) mgview.getButtonYellow(), Color.YELLOW, Color.YELLOW);
                     }
-                }, 400);
+                }, 300);
             }
         });
         mgview.getButtonNewGame().setOnClickListener(new View.OnClickListener() {
@@ -160,52 +163,25 @@ public class MemoryGameController extends AppCompatActivity {
         handleGradientDrawable((TextView) mgview.getButtonRed(), Color.RED,Color.RED);
     }
 
-    public void playSound(String sound){
-        int audioRes = 0;
-        switch (sound) {
-            case "red":
-                audioRes = R.raw.fa;
-                break;
-            case "green":
-                audioRes = R.raw.mi;
-                break;
-            case "blue":
-                audioRes = R.raw.si;
-                break;
-            case "yellow":
-                audioRes = R.raw.sol;
-                break;
-            case "lose":
-                audioRes = R.raw.lose;
-                break;
-            case "start":
-                audioRes = R.raw.game_start;
-                break;
-        }
-        MediaPlayer p = MediaPlayer.create(mgview.getActivity(), audioRes);
-        p.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                mp.release();
-            }
-        });
-        p.start();
-    }
-
     public void startRound()
     {
         int delay;
         if (mgmodel.getRound()==1){
-            delay=200;
+            delay=100;
         }else{delay=50;}
         mgmodel.addRandomSequence();
+
         for(int i=0;i<mgmodel.getCurrentSequence().size();i++){
+            if(mgmodel.getRound() == RandomLimit){
+                gameOver();
+                break;
+            }
             if(mgmodel.getCurrentSequence().get(i).equals("yellow")) {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         handleGradientDrawable((TextView) mgview.getButtonYellow(), Color.WHITE, Color.YELLOW);
-                        playSound("yellow");
+                        Sound.playSound(mgview.getActivity(), "yellow");
                     }
                 }, delay);
                 delay += 200;
@@ -223,7 +199,7 @@ public class MemoryGameController extends AppCompatActivity {
                     @Override
                     public void run() {
                         handleGradientDrawable((TextView) mgview.getButtonBlue(), Color.parseColor("#26ABFF"),Color.BLUE);
-                        playSound("blue");
+                        Sound.playSound(mgview.getActivity(), "blue");
                     }
                 }, delay);
                 delay+=200;
@@ -241,7 +217,7 @@ public class MemoryGameController extends AppCompatActivity {
                     @Override
                     public void run() {
                         handleGradientDrawable((TextView) mgview.getButtonGreen(), Color.WHITE, Color.GREEN);
-                        playSound("green");
+                        Sound.playSound(mgview.getActivity(), "green");
                     }
                 }, delay);
                 delay+=200;
@@ -259,7 +235,7 @@ public class MemoryGameController extends AppCompatActivity {
                     @Override
                     public void run() {
                         handleGradientDrawable((TextView) mgview.getButtonRed(), Color.parseColor("#ffcccb"),Color.RED);
-                        playSound("red");
+                        Sound.playSound(mgview.getActivity(), "red");
                     }
                 }, delay);
                 delay+=200;
@@ -279,12 +255,6 @@ public class MemoryGameController extends AppCompatActivity {
                         testPlayer();
                     }
                 }, delay);
-            }
-
-            if(mgmodel.getRound() == RandomLimit){
-                playSound("lose");
-                mgview.displayNewGameButton(true);
-                resetGame();
             }
         }
     }
@@ -309,7 +279,7 @@ public class MemoryGameController extends AppCompatActivity {
                 }
                 evaluateRound(isCorrect);
             }
-        }, 400*mgmodel.getRound());
+        }, 300*mgmodel.getRound());
     }
 
     public void evaluateRound(Boolean userEval){
@@ -323,18 +293,20 @@ public class MemoryGameController extends AppCompatActivity {
             }, 300);
         }
         else{
-            playSound("lose");
-            mgview.displayNewGameButton(true);
-            resetGame();
+            gameOver();
         }
     }
 
-    private void resetGame(){
-        mgmodel.clear();
-        mgview.setMessageTextView("Displaying sequence.");
+    public void gameOver(){
+        Sound.playSound(mgview.getActivity(), "lose");
         mgview.displayNewGameButton(true);
         mgview.setButtonMemoryClicked(false);
-        random = new Random();
-        RandomLimit = random.nextInt(10) + 5;
+        mgview.setMessageTextView("Click MEMORY to start.");
+        Log.d("Color", mgmodel.getColors().toString());
+        Log.d("Current Sequence", mgmodel.getCurrentSequence().toString());
+        Log.d("User Sequence", mgmodel.getUserSequence().toString());
+        Log.d("Round", "" + mgmodel.getRound());
+        Log.d("Random Limit", "" + RandomLimit);
+
     }
 }
