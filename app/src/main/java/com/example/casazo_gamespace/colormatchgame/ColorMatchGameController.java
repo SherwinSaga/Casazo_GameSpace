@@ -164,6 +164,5 @@ public class ColorMatchGameController implements View.OnClickListener {
 
         handler.removeCallbacks(runnable);
         handler.postDelayed(runnable, 100);
-
     }
 }

@@ -90,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     //ayaw ni hilabti ty kay mabuang ang widget
     @Override
     protected void onStart() {
