@@ -12,24 +12,32 @@ import java.util.Random;
 public class GameManager implements OnGameStatusChangedListener {
     private MainActivity activity;
     private boolean isGameRunning;
+    private int precededGame;
 
     public GameManager(MainActivity activity) {
         this.activity = activity;
         isGameRunning = false;
+        precededGame = -1;
     }
     public void startRandomGame() {
+        int randomGame;
         if (!isGameRunning) {
-            Random random = new Random();
-            int randomGame = random.nextInt(3);
-
+            while(true){
+                Random random = new Random();
+                randomGame = random.nextInt(3);
+                if(randomGame!=precededGame) break;
+            }
             switch (randomGame) {
                 case 0:
+                    precededGame = 0;
                     startSwipeGame();
                     break;
                 case 1:
+                    precededGame = 1;
                     startColorMatchGame();
                     break;
                 case 2:
+                    precededGame = 2;
                     startMemoryGame();
             }
         }

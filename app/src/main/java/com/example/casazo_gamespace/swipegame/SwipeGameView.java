@@ -30,6 +30,7 @@ public class SwipeGameView extends ConstraintLayout {
     private Button btnRestart;
     private boolean isGameFinished;
     private OnGameStatusChangedListener onGameStatusChangedListener;
+    private ProgressBar progbar;
 
     public SwipeGameView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -43,6 +44,7 @@ public class SwipeGameView extends ConstraintLayout {
         vectorAssetImageView = findViewById(R.id.vectorAssetImageView);
         btnRestart = findViewById(R.id.restartbutton);
         btnRestart.setVisibility(View.GONE);
+        progbar = findViewById(R.id.progressBarSwipegame);
         isGameFinished = false;
 
         SwipeGameModel model = new SwipeGameModel();
@@ -101,5 +103,10 @@ public class SwipeGameView extends ConstraintLayout {
             onGameStatusChangedListener.onGameStatusChanged(!isGameFinished);
         }
     }
+
+    public void setProgressBar(float progress) {
+        progbar.setProgress((int) (progress * 100));
+    }
+
 
 }
