@@ -24,10 +24,6 @@ public class SwipeGameUpdater {
         updateBackgroundColor();
     }
 
-    public void updateTimeBar(int p){
-        view.setTimeBar(p);
-    }
-
     public void generateRandomDirection(SwipeGameModel model) {
         String[] allDirections = {"UP", "DOWN", "LEFT", "RIGHT"};
         String randomDirection;
@@ -61,7 +57,7 @@ public class SwipeGameUpdater {
         return model.getAssetID(randomIndex);
     }
 
-    public void resetUpdater(){
+    public void resetUpdaterVariables(){
         Backgroundtracker = 0;
         occurenceTracker1 = "";
         isChange2nd = false;

@@ -8,6 +8,8 @@ import android.graphics.Color;
 import android.os.CountDownTimer;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 
 import com.example.casazo_gamespace.MainActivity;
@@ -19,9 +21,11 @@ import java.util.Random;
 public class SwipeGameController {
     private SwipeGameModel model;
     private SwipeGameView view;
-    private SwipeGameUpdater sgUpdater;
+    public SwipeGameUpdater sgUpdater;
     private float x1, y1, x2, y2;
     private CountDownTimer timer;
+
+    private boolean isGameFinished;
 
     private int goal;
 
@@ -29,23 +33,40 @@ public class SwipeGameController {
         this.model = model;
         this.view = view;
         this.sgUpdater = new SwipeGameUpdater(view);
+        this.isGameFinished = false;
 
         this.timer = new CountDownTimer(1000, 1000) {
             public void onTick(long millisUntilFinished) {
                 // This method will be called every second
                 int prog = (int) (millisUntilFinished/1000);
-                sgUpdater.updateTimeBar(prog);
             }
             public void onFinish() {
-                view.GameOverUI(model.getCurrentScore());
+                //When timer runs out, display restart
                 resetGame();
+                updateButtonRestart(true);
+
             }
         };
+        initializeListeners();
 
         Random random = new Random();
         this.goal = random.nextInt(6) + 10;
+        view.hideBtnRestart();
     }
 
+    private void initializeListeners(){
+        view.getBtnRestart().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //btn restart
+                //to do by jess
+                //gamit ug getIsGameFinished() para makibaw sa state
+                //ayaw iwagtang ang resetGame() kay inkaso mabalik ni sya as same random game
+                resetGame();
+
+            }
+        });
+    }
     public void onSwipe(String direction) {
         List<String> directions = model.getDirections();
 
@@ -60,25 +81,35 @@ public class SwipeGameController {
             }
             view.setScore(model.getCurrentScore());
 
+            //WIN CONDITION
             if(model.getCurrentScore() == goal){
-
-                timer.cancel();
-                view.doneUI(model.getCurrentScore());
+                //to do
+                //transition to next game
+                resetGame();
+                isGameFinished = true;  //gamit ug getIsGameFinished() para makibaw sa state
+                Toast.makeText(view.getContext(), "asdasdasd", Toast.LENGTH_SHORT).show();
                 return;
             }
+
+
+            //LOSE CONDITION
         } else {
-            if(model.getCurrentScore() > model.getHighScore()){    //track highscore
+            if(model.getCurrentScore() > model.getHighScore()){
                 model.setHighScore(model.getCurrentScore());
             }
-            view.GameOverUI(model.getCurrentScore());
             resetGame();
+            updateButtonRestart(true);
         }
     }
 
     public View.OnTouchListener getOnTouchListener(){
         return new View.OnTouchListener(){
+
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(isGameFinished){
+                    return true;
+                }
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_UP:
                         x2 = motionEvent.getX();
@@ -123,29 +154,31 @@ public class SwipeGameController {
     private void resetGame() {
         model.clear();
         model.setCurrentScore(0);
-        sgUpdater.resetUpdater();
+        sgUpdater.resetUpdaterVariables();
         timer.cancel();
+        generateRandomDirection();
+        view.setTextviewDirections(model.getDirections());
+        view.setScore(model.getCurrentScore());
+        view.hideBtnRestart();
+        isGameFinished = false;
     }
 
+    public boolean getIsGameFinished(){
+        return this.isGameFinished;
+    }
 
+    public void updateButtonRestart(boolean n){
+        this.isGameFinished = n;
+        if (n) {
+            view.displayRestart();
+        } else {
+            view.hideBtnRestart();
+        }
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public void timeResume(){
+        timer.start();
+    }
 
     public void generateRandomDirection() {
         sgUpdater.generateRandomDirection(model);

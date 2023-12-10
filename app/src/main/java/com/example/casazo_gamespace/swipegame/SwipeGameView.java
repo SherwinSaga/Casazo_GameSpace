@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -23,10 +24,9 @@ public class SwipeGameView extends ConstraintLayout {
 
     private TextView directionTextView;
     private TextView scoreTextView;
-    private ProgressBar timeBar;
     private SwipeGameController controller;
-
     private ImageView vectorAssetImageView;
+    private Button btnRestart;
     public SwipeGameView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initialize(context);
@@ -37,20 +37,19 @@ public class SwipeGameView extends ConstraintLayout {
         directionTextView = findViewById(R.id.textView1);
         scoreTextView = findViewById(R.id.scoreTextView);
         vectorAssetImageView = findViewById(R.id.vectorAssetImageView);
-        timeBar = findViewById(R.id.progressbarTimer);
+        btnRestart = findViewById(R.id.restartbutton);
+        btnRestart.setVisibility(View.GONE);
 
         SwipeGameModel model = new SwipeGameModel();
         controller = new SwipeGameController(model, this);
 
         setOnTouchListener(controller.getOnTouchListener());
 
-        timeBar.setBackgroundColor(Color.argb(0, 255, 0, 0));
-        timeBar.setMax(1);
-        timeBar.setVisibility(View.VISIBLE);
         controller.generateRandomDirection();
         setBackgroundColor(Color.argb(255, 252, 174, 30));
         setTextviewDirections(model.getDirections());
         setScore(model.getCurrentScore());
+        controller.timeResume();
     }
 
     public void setTextviewDirections(List<String> directions) {
@@ -69,47 +68,15 @@ public class SwipeGameView extends ConstraintLayout {
         vectorAssetImageView.setImageResource(vectorResourceId);
     }
 
-    public void setTimeBar(int n){
-        timeBar.setProgress(n);
+    public void displayRestart(){
+        btnRestart.setVisibility(View.VISIBLE);
     }
 
-    public void GameOverUI(int score) {
-        new AlertDialog.Builder(getContext())
-                .setTitle("Game Over")
-                .setMessage("Your score is: " + score)
-                .setPositiveButton("Restart", (dialog, which) -> {
-                    SwipeGameModel model = new SwipeGameModel();
-                    controller = new SwipeGameController(model, this);
-                    controller.generateRandomDirection();
-                    setOnTouchListener(controller.getOnTouchListener());
-                    setTextviewDirections(model.getDirections());
-                    setScore(model.getCurrentScore());
-                })
-                .setNegativeButton("Exit", (dialog, which) -> {
-                    Intent intent = new Intent(getContext(), MainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    getContext().startActivity(intent);
-                })
-                .show();
+    public void hideBtnRestart(){
+        btnRestart.setVisibility(View.GONE);
+    }
+    public View getBtnRestart(){
+        return this.btnRestart;
     }
 
-    public void doneUI(int score) {
-        new AlertDialog.Builder(getContext())
-                .setTitle("COMPLETED")
-                .setMessage("Your score is: " + score)
-                .setPositiveButton("Restart", (dialog, which) -> {
-                    SwipeGameModel model = new SwipeGameModel();
-                    controller = new SwipeGameController(model, this);
-                    controller.generateRandomDirection();
-                    setOnTouchListener(controller.getOnTouchListener());
-                    setTextviewDirections(model.getDirections());
-                    setScore(model.getCurrentScore());
-                })
-                .setNegativeButton("Exit", (dialog, which) -> {
-                    Intent intent = new Intent(getContext(), MainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    getContext().startActivity(intent);
-                })
-                .show();
-    }
 }
