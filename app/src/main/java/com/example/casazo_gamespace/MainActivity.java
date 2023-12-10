@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 handler.post(() -> showNotificationReminder());
             }
-        }, 0, 60 * 1000); //60secs para demo purposes
+        }, 0, 10 * 1000); //60secs para demo purposes
     }
 
     private void showNotificationReminder() {
