@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import android.app.PendingIntent;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private ColorMatchGameController colorMatchGameController;
     private SwipeGameView sw;
     private Random random;
+    public static final String ACTION_LAUNCH_RANDOM_GAME = "com.example.casazo_gamespace.LAUNCH_RANDOM_GAME";
 
     private boolean isAppInForeground = false;
 
@@ -51,41 +53,11 @@ public class MainActivity extends AppCompatActivity {
         WidgetState.hideWidget(this);
         scheduleNotificationReminder();
 
-        random = new Random();
-        int randomGame = random.nextInt(3);
-
-        switch (randomGame) {
-            case 0:
-                // Saga game (SwipeGameView)
-                SwipeGameView sw = new SwipeGameView(this, null);
-                setContentView(sw);
-                break;
-            case 1:
-                // Castro game (ColorMatchGame)
-                setContentView(R.layout.colormatchgame_layout);
-                colorMatchGameModel = new ColorMatchGameModel();
-                colorMatchGameView = new ColorMatchGameView(MainActivity.this);
-                colorMatchGameController = new ColorMatchGameController(colorMatchGameModel, colorMatchGameView);
-                break;
-            case 2:
-                // Zoilo game (MemoryGameActivity)
-                Intent intent = new Intent(MainActivity.this, MemoryGameActivity.class);
-                startActivity(intent);
-                break;
-        }
+        launchRandomGame();
 
         //to do (saga)
         //on boot integrate with widget
         //notifs during hours na common ang sleepiness
-
-        //assigned Jess
-        //to do
-        //random connect
-        //ang reset na button kay decide lang
-        //reset either start balik current game or simply leave it to random
-        //disregard score??? idk sir pwede rasad
-
-        //so if mag implement kag restart jess kay di malikayan na naay ma edit sa games namo kung ma gameover.
 
     }
 
@@ -131,18 +103,24 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 handler.post(() -> showNotificationReminder());
             }
-        }, 0, 60 * 1000); //60secs para demo purposes
+        }, 0, 10 * 1000); //60secs para demo purposes
     }
 
     private void showNotificationReminder() {
         if (!isAppInForeground) {
             createNotificationChannel();
 
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.setAction(ACTION_LAUNCH_RANDOM_GAME); // Set the custom action
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                     .setSmallIcon(R.drawable.widget_icon)
                     .setContentTitle("Play Reminder")
                     .setContentText("Bored? Sleepy? Play Now")
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setContentIntent(pendingIntent)
                     .setAutoCancel(true);
 
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
@@ -172,4 +150,38 @@ public class MainActivity extends AppCompatActivity {
             notificationManager.createNotificationChannel(channel);
         }
     }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (intent.getAction() != null && intent.getAction().equals(ACTION_LAUNCH_RANDOM_GAME)) {
+            launchRandomGame();
+        }
+    }
+
+    private void launchRandomGame() {
+        random = new Random();
+        int randomGame = random.nextInt(3);
+
+        switch (randomGame) {
+            case 0:
+                // Saga game (SwipeGameView)
+                SwipeGameView sw = new SwipeGameView(this, null);
+                setContentView(sw);
+                break;
+            case 1:
+                // Castro game (ColorMatchGame)
+                setContentView(R.layout.colormatchgame_layout);
+                colorMatchGameModel = new ColorMatchGameModel();
+                colorMatchGameView = new ColorMatchGameView(MainActivity.this);
+                colorMatchGameController = new ColorMatchGameController(colorMatchGameModel, colorMatchGameView);
+                break;
+            case 2:
+                // Zoilo game (MemoryGameActivity)
+                Intent gameIntent = new Intent(MainActivity.this, MemoryGameActivity.class);
+                startActivity(gameIntent);
+                break;
+        }
+    }
+
 }
