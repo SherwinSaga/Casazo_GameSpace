@@ -9,7 +9,6 @@ import androidx.core.app.NotificationManagerCompat;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -24,7 +23,6 @@ import com.example.casazo_gamespace.FloatingWidget.WidgetState;
 import com.example.casazo_gamespace.colormatchgame.ColorMatchGameController;
 import com.example.casazo_gamespace.colormatchgame.ColorMatchGameModel;
 import com.example.casazo_gamespace.colormatchgame.ColorMatchGameView;
-import com.example.casazo_gamespace.memorygame.MemoryGameActivity;
 import com.example.casazo_gamespace.swipegame.SwipeGameView;
 
 import java.util.Random;

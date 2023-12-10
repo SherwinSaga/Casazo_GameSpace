@@ -2,6 +2,9 @@ package com.example.casazo_gamespace;
 import com.example.casazo_gamespace.colormatchgame.ColorMatchGameController;
 import com.example.casazo_gamespace.colormatchgame.ColorMatchGameModel;
 import com.example.casazo_gamespace.colormatchgame.ColorMatchGameView;
+import com.example.casazo_gamespace.memorygame.MemoryGameController;
+import com.example.casazo_gamespace.memorygame.MemoryGameModel;
+import com.example.casazo_gamespace.memorygame.MemoryGameView;
 import com.example.casazo_gamespace.swipegame.SwipeGameView;
 
 import java.util.Random;
@@ -17,7 +20,7 @@ public class GameManager implements OnGameStatusChangedListener {
     public void startRandomGame() {
         if (!isGameRunning) {
             Random random = new Random();
-            int randomGame = random.nextInt(2);
+            int randomGame = random.nextInt(3);
 
             switch (randomGame) {
                 case 0:
@@ -26,6 +29,8 @@ public class GameManager implements OnGameStatusChangedListener {
                 case 1:
                     startColorMatchGame();
                     break;
+                case 2:
+                    startMemoryGame();
             }
         }
     }
@@ -62,6 +67,20 @@ public class GameManager implements OnGameStatusChangedListener {
             startRandomGame();
         }
 
+    }
+    private void startMemoryGame(){
+        activity.setContentView(R.layout.memorygame_layout);
+        MemoryGameModel memoryGameModel = new MemoryGameModel();
+        MemoryGameView memoryGameView = new MemoryGameView(activity);
+        MemoryGameController memoryGameController = new MemoryGameController(memoryGameModel, memoryGameView);
+        isGameRunning = true;
+
+        memoryGameView.setOnGameStatusChangedListener(this);
+
+        if(memoryGameView.isFinished()) {
+            isGameRunning = false;
+            startRandomGame();
+        }
     }
 
 }
