@@ -43,62 +43,26 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String CHANNEL_ID = "playReminderChannel";
     private static final int NOTIFICATION_ID = 1;
+    private GameManager gameManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        gameManager = new GameManager(this);
         WidgetState.checkPermission(this);
         WidgetState.hideWidget(this, WidgetState.isMyServiceRunning(WidgetService.class, this));
-
         scheduleNotificationReminder();
 
-        random = new Random();
-        int randomGame = random.nextInt(3);
-
-        switch (randomGame) {
-            case 0:
-                // Saga game (SwipeGameView)
-                SwipeGameView sw = new SwipeGameView(this, null);
-                setContentView(sw);
-                break;
-            case 1:
-                // Castro game (ColorMatchGame)
-                setContentView(R.layout.colormatchgame_layout);
-                colorMatchGameModel = new ColorMatchGameModel();
-                colorMatchGameView = new ColorMatchGameView(MainActivity.this);
-                colorMatchGameController = new ColorMatchGameController(colorMatchGameModel, colorMatchGameView);
-                break;
-            case 2:
-                // Zoilo game (MemoryGameActivity)
-                Intent intent = new Intent(MainActivity.this, MemoryGameActivity.class);
-                startActivity(intent);
-                break;
-        }
-
-        //to do (saga)
-        //on boot integrate with widget
-        //notifs during hours na common ang sleepiness
-
-        //assigned Jess
-        //to do
-        //random connect
-        //ang reset na button kay decide lang
-        //reset either start balik current game or simply leave it to random
-        //disregard score??? idk sir pwede rasad
-
-        //so if mag implement kag restart jess kay di malikayan na naay ma edit sa games namo kung ma gameover.
+        gameManager.startRandomGame();
 
     }
 
-    //ayaw ni hilabti ty kay mabuang ang widget
     @Override
     protected void onStart() {
         super.onStart();
         isAppInForeground = true;
-        //WidgetState.hideWidget(this);
     }
 
 

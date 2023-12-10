@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.casazo_gamespace.MainActivity;
+import com.example.casazo_gamespace.OnGameStatusChangedListener;
 import com.example.casazo_gamespace.R;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -27,6 +28,9 @@ public class SwipeGameView extends ConstraintLayout {
     private SwipeGameController controller;
     private ImageView vectorAssetImageView;
     private Button btnRestart;
+    private boolean isGameFinished;
+    private OnGameStatusChangedListener onGameStatusChangedListener;
+
     public SwipeGameView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initialize(context);
@@ -39,6 +43,7 @@ public class SwipeGameView extends ConstraintLayout {
         vectorAssetImageView = findViewById(R.id.vectorAssetImageView);
         btnRestart = findViewById(R.id.restartbutton);
         btnRestart.setVisibility(View.GONE);
+        isGameFinished = false;
 
         SwipeGameModel model = new SwipeGameModel();
         controller = new SwipeGameController(model, this);
@@ -77,6 +82,24 @@ public class SwipeGameView extends ConstraintLayout {
     }
     public View getBtnRestart(){
         return this.btnRestart;
+    }
+
+    public boolean isFinished() {
+        return isGameFinished;
+    }
+
+    public void setFinished(boolean finished) {
+        isGameFinished = finished;
+    }
+
+    public void setOnGameStatusChangedListener(OnGameStatusChangedListener listener) {
+        this.onGameStatusChangedListener = listener;
+    }
+
+    public void notifyGameStatusChangedListener() {
+        if (onGameStatusChangedListener != null) {
+            onGameStatusChangedListener.onGameStatusChanged(!isGameFinished);
+        }
     }
 
 }

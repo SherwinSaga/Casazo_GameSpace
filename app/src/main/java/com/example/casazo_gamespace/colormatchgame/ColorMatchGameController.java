@@ -20,9 +20,7 @@ public class ColorMatchGameController implements View.OnClickListener {
     Handler handler;
     Runnable runnable;
     int Randomlimit;
-
     private int previousArrowState = -1;
-
     private final static int STATIC_BLUE = 1;
     private final static int STATIC_RED = 2;
     private final static int STATIC_YELLOW = 3;
@@ -40,6 +38,7 @@ public class ColorMatchGameController implements View.OnClickListener {
         startGameLoop();
         Random r = new Random();
         Randomlimit = r.nextInt(7)+10;
+        //Randomlimit = 5;
     }
 
     public void initListeners(){
@@ -49,17 +48,20 @@ public class ColorMatchGameController implements View.OnClickListener {
             public void onClick(View v){
                 Random r = new Random();
                 Randomlimit = r.nextInt(7)+10;
+                //Randomlimit = 5;
                 resetGame();
             }
         });
         colorMatchGameView.getBtnExit().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(colorMatchGameView.getActivity(), MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                colorMatchGameView.getActivity().startActivity(intent);
+                gamedone();
             }
         });
+    }
+    public void gamedone(){
+        colorMatchGameView.setFinished(true);
+        colorMatchGameView.notifyGameStatusChangedListener();
     }
 
     @Override
@@ -131,6 +133,8 @@ public class ColorMatchGameController implements View.OnClickListener {
                         }
 
                         if (colorMatchGameModel.getCurrentPoints() == Randomlimit) {
+                            colorMatchGameView.setFinished(true);
+                            colorMatchGameView.notifyGameStatusChangedListener();
                             colorMatchGameView.getIvButton().setEnabled(false);
                             colorMatchGameView.displayRetryButton(true);
                             return;

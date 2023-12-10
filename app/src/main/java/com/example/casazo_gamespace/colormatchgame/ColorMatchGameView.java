@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.casazo_gamespace.OnGameStatusChangedListener;
 import com.example.casazo_gamespace.R;
 
 
@@ -30,6 +31,8 @@ public class ColorMatchGameView {
     int arrowState = STATIC_BLUE;
 
     int currentPoints = 0;
+    private OnGameStatusChangedListener onGameStatusChangedListener;
+    private boolean isGameFinished;
 
     private View rootView;
     public ColorMatchGameView(Activity activity){
@@ -43,6 +46,7 @@ public class ColorMatchGameView {
         this.btnRetry.setVisibility(View.GONE);
         this.btnExit.setVisibility(View.GONE);
         this.activity = activity;
+        isGameFinished = false;
     }
 
     public void setBackgroundColor(int color) {
@@ -113,4 +117,22 @@ public class ColorMatchGameView {
     public void setRotation(int buttonState, int buttonDrawable) {}
 
     public Activity getActivity() { return activity;}
+
+    public void setOnGameStatusChangedListener(OnGameStatusChangedListener listener) {
+        this.onGameStatusChangedListener = listener;
+    }
+
+    public void notifyGameStatusChangedListener() {
+        if (onGameStatusChangedListener != null) {
+            onGameStatusChangedListener.onGameStatusChanged(!isGameFinished);
+        }
+    }
+
+    public boolean isFinished() {
+        return isGameFinished;
+    }
+
+    public void setFinished(boolean finished) {
+        isGameFinished = finished;
+    }
 }

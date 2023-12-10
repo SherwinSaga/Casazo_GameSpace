@@ -51,6 +51,7 @@ public class SwipeGameController {
 
         Random random = new Random();
         this.goal = random.nextInt(6) + 10;
+        //this.goal = 5;
         view.hideBtnRestart();
     }
 
@@ -58,12 +59,8 @@ public class SwipeGameController {
         view.getBtnRestart().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //btn restart
-                //to do by jess
-                //gamit ug getIsGameFinished() para makibaw sa state
-                //ayaw iwagtang ang resetGame() kay inkaso mabalik ni sya as same random game
-                resetGame();
-
+                //resetGame();
+                gamedone();
             }
         });
     }
@@ -86,8 +83,10 @@ public class SwipeGameController {
                 //to do
                 //transition to next game
                 resetGame();
-                isGameFinished = true;  //gamit ug getIsGameFinished() para makibaw sa state
-                Toast.makeText(view.getContext(), "asdasdasd", Toast.LENGTH_SHORT).show();
+                view.setFinished(true);
+                isGameFinished = true;
+                view.notifyGameStatusChangedListener();
+                //Toast.makeText(view.getContext(), "asdasdasd", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -184,5 +183,9 @@ public class SwipeGameController {
         sgUpdater.generateRandomDirection(model);
     }
 
+    public void gamedone(){
+        view.setFinished(true);
+        view.notifyGameStatusChangedListener();
+    }
 
 }
