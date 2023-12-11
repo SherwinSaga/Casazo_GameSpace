@@ -40,7 +40,7 @@ public class ColorMatchGameController implements View.OnClickListener {
         startGameLoop();
         Random r = new Random();
         Randomlimit = r.nextInt(7)+10;
-        //Randomlimit = 5;
+        //Randomlimit = 2;
     }
 
     public void initListeners(){
@@ -117,7 +117,7 @@ public class ColorMatchGameController implements View.OnClickListener {
                 Button btnExit = (Button) colorMatchGameView.getBtnExit();
                 btnRetry.setVisibility(View.GONE);
                 btnExit.setVisibility(View.GONE);
-                btnExit.setVisibility(View.GONE);
+                //btnExit.setVisibility(View.GONE);
                 colorMatchGameModel.setCurrentTime(colorMatchGameModel.getCurrentTime() - 100);
                 colorMatchGameView.displayProgressBar(colorMatchGameModel.getStartTime(), colorMatchGameModel.getCurrentTime());
                 //colorMatchGameUpdater.updateBackgroundColor();
@@ -174,7 +174,7 @@ public class ColorMatchGameController implements View.OnClickListener {
         handler.postDelayed(runnable, 100);
     }
 
-    private void resetGame() {
+    public void resetGame() {
         colorMatchGameModel.setCurrentTime(colorMatchGameModel.getOriginalStartTime());
         colorMatchGameModel.setCurrentPoints(0);
         colorMatchGameModel.setButtonState(new Random().nextInt(4) + 1);

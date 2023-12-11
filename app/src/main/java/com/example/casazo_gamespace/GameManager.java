@@ -66,6 +66,7 @@ public class GameManager implements OnGameStatusChangedListener {
         ColorMatchGameModel colorMatchGameModel = new ColorMatchGameModel();
         ColorMatchGameView colorMatchGameView = new ColorMatchGameView(activity);
         ColorMatchGameController colorMatchGameController = new ColorMatchGameController(colorMatchGameModel, colorMatchGameView);
+        colorMatchGameController.resetGame();
         isGameRunning = true;
 
         colorMatchGameView.setOnGameStatusChangedListener(this);

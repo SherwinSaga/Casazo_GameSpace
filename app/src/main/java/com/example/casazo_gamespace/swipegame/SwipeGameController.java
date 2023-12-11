@@ -50,7 +50,7 @@ public class SwipeGameController {
 
         Random random = new Random();
         this.goal = random.nextInt(6) + 10;
-        //this.goal = 5;
+        //this.goal = 2;
         view.hideBtnRestart();
     }
 

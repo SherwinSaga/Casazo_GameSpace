@@ -28,7 +28,6 @@ public class MemoryGameView{
     private TextView buttonBlue;
     private TextView buttonMemory;
     private Button buttonNewGame;
-    private ProgressBar progressBar;
     private Activity activity;
     private OnGameStatusChangedListener onGameStatusChangedListener;
     private boolean isGameFinished;
@@ -42,7 +41,6 @@ public class MemoryGameView{
         this.buttonBlue = activity.findViewById(R.id.buttonBlue);
         this.buttonMemory = activity.findViewById(R.id.buttonMemory);
         this.buttonNewGame = activity.findViewById(R.id.buttonNewGame);
-        this.progressBar = activity.findViewById(R.id.progressBar);
         this.activity = activity;
         isGameFinished = false;
         isButtonMemoryClicked = false;
@@ -55,10 +53,6 @@ public class MemoryGameView{
     public View getButtonBlue(){ return buttonBlue; }
     public View getButtonMemory(){ return buttonMemory; }
     public View getButtonNewGame(){ return buttonNewGame;}
-    public void displayProgressBar(int max, int progress){
-        progressBar.setMax(max);
-        progressBar.setProgress(progress);
-    }
     public void displayNewGameButton(boolean visible){
         buttonNewGame.setVisibility(visible ? View.VISIBLE : View.GONE);
     }

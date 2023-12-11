@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         isAppInForeground = true;
+        WidgetState.hideWidget(this, WidgetState.isMyServiceRunning(WidgetService.class, this));
     }
 
 

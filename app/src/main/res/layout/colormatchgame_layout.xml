@@ -54,5 +54,6 @@
         android:text="\?"
         android:layout_below="@id/btnRetry"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/casblue"/>
 </RelativeLayout>

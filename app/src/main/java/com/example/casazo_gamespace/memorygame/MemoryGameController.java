@@ -34,6 +34,7 @@ public class MemoryGameController extends AppCompatActivity {
         this.mgupdater = new MemoryGameUpdater(this.mgview);
         random = new Random();
         RandomLimit = random.nextInt(10) + 5;
+        //RandomLimit = 2;
         initListeners();
         updateView();
     }
